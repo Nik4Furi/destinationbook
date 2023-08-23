@@ -12,7 +12,7 @@ const UsersSchema = new mongoose.Schema({
     name: { type: String, required: true, minlength: [5, "Name must be 5 char long "], maxlength: [250, "Name mustn't 250 char long"] },
 
     email: {
-        type: String, required: true, minlength: [5, "Email must be 5 char long "], maxlength: [450, "Email mustn't 450 char long"], unique: [true,"This email is already exist"], trim: true, lowercase: true, validate: {
+        type: String, required: true, minlength: [7, "Email must be 7 char long "], maxlength: [450, "Email mustn't 450 char long"], unique: [true,"This email is already exist"], trim: true, lowercase: true, validate: {
             validator: function (value) {
                 if (!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/g.test(value)))
                     throw new Error(`{VALUE} is not valid email`)
@@ -26,9 +26,9 @@ const UsersSchema = new mongoose.Schema({
 
         password: { type: String, required: true, minlength: [8, "Password must be 8 char long "], maxlength: [450, "Password mustn't 450 char long"] },
 
-        picturepic: {
-            public_id: String, url: String
-        },
+        // picturepic: {
+        //     public_id: String, url: String
+        // },
 
         role: { type: String, required: true, default: 'user', enum: Roles },
 

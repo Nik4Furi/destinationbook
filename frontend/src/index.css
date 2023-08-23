@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Configuring some global utility  */
+/* Define the button styles */
+.button {
+    background-image: linear-gradient(to right, rgb(215, 112, 215), rgb(149, 149, 217));
+    color: white;
+    padding: 5px 7px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    /* Add a smooth color transition on hover */ 
+}
+.button:hover{
+    /* background-image: linear-gradient(to right, rgb(215, 112, 215), rgb(149, 149, 217)); */
+    color: rgb(239, 230, 230);
+}
+
