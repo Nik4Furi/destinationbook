@@ -14,14 +14,18 @@ const UsersSchema = new mongoose.Schema({
     email: {
         type: String, required: true, minlength: [7, "Email must be 7 char long "], maxlength: [450, "Email mustn't 450 char long"], unique: [true,"This email is already exist"], trim: true, lowercase: true, validate: {
             validator: function (value) {
-                if (!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/g.test(value)))
+                if (/[a-z0-9]+@[a-z]+\.[a-z]{2,3}/.test(value) == false)
                     throw new Error(`{VALUE} is not valid email`)
             }}
         },
 
 
         phone: {
-            type: Number, required: true, minlength: [10, "Phone must be 10 char long "], maxlength: [13, "Phone mustn't 13 char long"], unique: [true,"This phone credentials is already exist"], trim: true
+            type: Number, required: true, minlength: [10, "Phone must be 10 char long "], maxlength: [13, "Phone mustn't 13 char long"], unique: [true,"This phone credentials is already exist"], trim: true,validate: {
+                validator: function (value) {
+                    if (/^\d{10}$/.test(value) == false)
+                        throw new Error(`{VALUE} is not valid phone`)
+                }}
         },
 
         password: { type: String, required: true, minlength: [8, "Password must be 8 char long "], maxlength: [450, "Password mustn't 450 char long"] },
@@ -32,7 +36,7 @@ const UsersSchema = new mongoose.Schema({
 
         role: { type: String, required: true, default: 'user', enum: Roles },
 
-        address: { type: String, minlength: [10, "Address must be 10 char long "], maxlength: [1000, "Address mustn't 1000 char long"] },
+        address: { type: String},
 
         // status : {type: Boolean, required: true, default:false},
 

@@ -1,20 +1,31 @@
-import React from 'react'
+import React from 'react';
 
-import video from '../../assets/bg.mp4'
+import bg from '../../assets/bg.mp4'
 
 const HeaderBg = () => {
-    return (
-        <>
-            <div className="relative">
-                <video autoPlay muted loop className="w-full h-auto">
-                    <source src={video} type="video/mp4" />
-                </video>
-                <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center text-white text-4xl font-semibold">
-                    <p>Your Text Here</p>
-                </div>
-            </div>
-        </>
-    )
-}
+  return (
+    <div className="relative h-[288px] w-screen overflow-hidden bg-blend-darken">
+      {/* Video */}
+      <video
+        autoPlay
+        muted
+        loop
+        className="absolute top-0 left-0 object-cover h-full w-full z-10"
+      >
+        <source src={bg} type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
 
-export default HeaderBg
+      {/* Text Overlay */}
+      <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center text-white z-20">
+        <div className="text-center">
+          <h1 className="text-4xl font-bold mb-4">Book Your Place To Move On</h1>
+          <p className="text-lg font-bold">You can book a place where you can conduct meet, spent time, enjoy vocation or make other things </p>
+         <a href="#Explore"> <button className="px-4 m-2 bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Explore Now</button></a>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default HeaderBg;

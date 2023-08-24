@@ -1,5 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
+
+import { ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import './App.css';
 
 //Components Stuff
@@ -23,6 +27,7 @@ import Users from './pages/Admin/Users'
 import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentError from "./pages/PaymentError";
 import Error404 from "./pages/Error404";
+import About from "./pages/About";
 
 
 function App() {
@@ -48,13 +53,16 @@ function App() {
           </PrivateRoute>} />
 
           {/* Register Page  */}
-          <Route path="/register" element={<PrivateRoute>
-            <Register />
-          </PrivateRoute>} />
+          <Route path="/register" element={<Register />} />
 
           {/* Login Page  */}
           <Route path="/login" element={<PrivateRoute>
             <Login />
+          </PrivateRoute>} />
+
+          {/* Login Page  */}
+          <Route path="/about" element={<PrivateRoute>
+          <About />
           </PrivateRoute>} />
 
           {/* Destination Info Page  */}
@@ -105,7 +113,10 @@ function App() {
           <Route path="*" element={<Error404 />} />
 
 
+
         </Routes>
+
+        <ToastContainer autoClose={2500} />
       </BrowserRouter>
 
     </>

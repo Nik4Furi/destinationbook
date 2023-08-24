@@ -19,3 +19,27 @@
     color: rgb(239, 230, 230);
 }
 
+/* Animating the sponser section  */
+.animate-slide{
+    animation: slide infinite 13s  linear;
+   
+    /* background: red !important; */
+    /* width: 100% !important;
+    height: 100% !important; */
+}
+
+@keyframes slide {
+    0%{
+        transform: translateX(100%);
+    }
+    100%{
+        transform: translateX(-100%);
+    }
+}
+
+/* Backgroud of home header  */
+.bg-video{
+    width: 100%;
+    background: url('./assets/bg.mp4') center center-cover no-repeat;
+    height: 234px;
+}

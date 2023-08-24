@@ -3,9 +3,10 @@ import React from 'react'
 const Testimonials = ({name,description}) => {
     return (
         <>
-            <div className="bg-slate-100 rounded-lg shadow-md p-4">
-                <p className="text-gray-700 text-base">{description}</p>
-                <p className="text-gray-500 text-sm mt-2">{name}</p>
+            <div className="col-span-1 bg-slate-100 rounded-lg shadow-md p-4 relative">
+                <h1 className='text-red-400 font-semibold absolute text-6xl top-0 left-0'>"</h1>
+                <p className="text-gray-700 text-base p-2">{description}</p>
+                <p className="text-gray-900 text-sm mt-2">{name}</p>
             </div>
         </>
     )

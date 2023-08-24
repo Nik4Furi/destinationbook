@@ -7,13 +7,14 @@ const Services = () => {
             <div className="grid grid-cols-4 gap-1">
                 <div className="max-w-xs rounded overflow-hidden shadow-lg">
                     <div className="px-6 py-4">
-                        <div className="font-bold text-xl mb-2">What We serve 🔥</div>
-                        <p className="text-gray-700 text-base">You can checkout many things like guider, spaces , services serve manner, and other things we provide our customers</p>
+                        <h3 className="text-sm mb-2">What We serve</h3>
+                        <h1 className="font-bold text-lg mb-2">Top Values For You 🔥</h1>
+                        <p className="text-gray-700 text-base">Try variety of benefits when using our services</p>
                     </div>
                 </div>
-                <ServiceCard />
-                <ServiceCard />
-                <ServiceCard />
+                <ServiceCard img={"🌎"} title={"Lot Of Choices"} description={"total 400+ destination work with us"} />
+                            <ServiceCard img={"🎒"} title={"Best Tour Guides"} description={"Our tour guid have 5+ expereince"} />
+                            <ServiceCard img={"💳"} title={"Easy Booking"} description={"With an easy and fast ticket purchase process"} />
             </div>
         </>
     )

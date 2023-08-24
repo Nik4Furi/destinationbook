@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 
 //Connect app with database
 const Connection = process.env.MONGO_URI || MONGO_URI;
+// console.log("check connection ",Connection);
 
 mongoose.connect(Connection,{useNewUrlParser:true}). 
 then( ()=> console.log('Connection to database')). 

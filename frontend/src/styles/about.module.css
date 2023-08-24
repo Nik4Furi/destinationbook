@@ -1,0 +1,16 @@
+/* Animating the sponser section  */
+.animate-slide{
+    animation: slide infinite 5s  linear  !important;
+    background: red !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+@keyframes slide {
+    0%{
+        transform: translateX(100%);
+    }
+    100%{
+        transform: translateX(-100%);
+    }
+}
