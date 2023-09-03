@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
 
-//Roles in our app
+//Slots for places 
 const BookingSlots = Object.freeze({
     MORNING: 'morning',
-    AFTERNOON: 'afternoon',
+    AFTERNOON : 'afternoon',
+    EVENING: 'evening',
     NIGHT: 'night',
-    ANY : "anytime"
+    ANY : 'anytime'
 })
 
 //Create the shcema of our users
@@ -16,6 +17,8 @@ const PlacesSchema = new mongoose.Schema({
     description: { type: String, required: true, minlength: [9, "Description must be 9 char long "], maxlength: [450, "Description mustn't 250 char long"] },
 
     picture: { public_id: String, url: String },
+
+    location : String,
 
     price: Number,
 

@@ -9,6 +9,8 @@ const NotificationSchema = new mongoose.Schema({
 
     sender: { type: mongoose.Schema.Types.ObjectId,ref:'User'},
 
+    receiver: { type: mongoose.Schema.Types.ObjectId,ref:'User'},
+
     read : { type:Boolean, default:false },
 
     onclick : {type:String},

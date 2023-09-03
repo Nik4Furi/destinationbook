@@ -1,24 +1,20 @@
 // Login.js
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom'
-import { loginUsers } from '../Store/UsersSlice';
 
 import Loading from '../components/Loading'
 
 import { toast } from 'react-toastify'
 
 const Login = () => {
-    const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const users = useSelector(state => state.users);
 
     // console.log('check users details ',users, users.email);
     const [loading, setLoading] = useState(false);
 
     const [formData, setFormData] = useState({
-        email: users?.email || "",
+        email: "",
         password: ''
     });
 
@@ -33,45 +29,53 @@ const Login = () => {
 
         setLoading(true);
 
+        if (/[a-z0-9]+@[a-z]+\.[a-z]{2,3}/.test(formData.email) === false) {
+            toast.error(`${formData.email} is not valid email`)
+            setFormData({ email: "", password: '' })
+            setLoading(false);
+            return;
+        }
         try {
 
-            if (/[a-z0-9]+@[a-z]+\.[a-z]{2,3}/.test(formData.email) === false) {
-                toast.error(`${formData.email} is not valid email`)
+            const res = await fetch(`${process.env.REACT_APP_API}user/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+            const data = await res.json();
 
-                setFormData({ email: "", password: '' })
+            // console.log('check actuall data is ', data);
 
+            //Set the localstorage with token
+            localStorage.setItem('token',data.token);
+           
+            if (data.success === true) {
+                toast.success(`${data.msg}`);
+                navigate(-1);
+            }
+            else if (data.success === false) {
+                toast.error(`${data.msg}`);
                 setLoading(false);
-
+                setFormData({ email: formData.email, password: '' })
                 return;
             }
 
-            await dispatch(loginUsers(formData));
-
-            console.log('check users at login ', users)
-
-            if (users.status === true) {
-                toast.success(`${users.msg}`);
-                navigate('/login');
-
-            }
-            else if (users.status === false) {
-                toast.error(`${users.msg}`);
-                setLoading(false);
-                return;
-            }
-            
         } catch (error) {
             console.log(error);
             setFormData({ email: formData.email, password: '' })
 
             toast.error(`${error.message}`);
         }
-
+navigate(-1);
         setLoading(false);
         setFormData({ email: '', password: '' })
     };
 
     return (
+        <>
+        
         <div className="mx-auto p-4 bg-slate-100 " style={{ minHeight: "75vh" }}>
             {/* <h1 className="text-2xl font-semibold mb-4">Login</h1> */}
             <form onSubmit={handleSubmit} className="max-w-md mx-auto">
@@ -126,6 +130,8 @@ const Login = () => {
                 </div>
             </form>
         </div>
+
+        </>
     );
 };
 

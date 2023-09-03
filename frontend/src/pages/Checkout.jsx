@@ -1,10 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import DestinationCard from '../components/Checkout/DestinationCard'
 import CheckoutCard from '../components/Checkout/CheckoutCard'
 
 import dest from '../assets/dest-1.jpg'
+import { useSelector } from 'react-redux'
 
 const Checkout = () => {
+  const places = useSelector(state => state.places.places);
+  const booking = useSelector(state => state.booking);
+
+  console.log('length of booking ',booking.length,places.length)
+  //-------------- Find the places which is booked by the users
+  useEffect(()=>{
+  },[])
+
   return (
     <>
       <section id="Checkout" style={{minHeight:"80vh"}}>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const StatsCard = ({color,Stats, userCount, isProfitable }) => {
+const StatsCard = ({color,Stats, userCount, isProfitable,types }) => {
   return (
     <div className="bg-white rounded-lg shadow-md p-4">
       <div className="flex items-center">
@@ -38,7 +38,7 @@ const StatsCard = ({color,Stats, userCount, isProfitable }) => {
         <div>
           <h2 className="text-2xl font-semibold mb-2">{Stats} Statistics</h2>
           <p className="text-gray-600 text-sm">
-            Total Users: {userCount}{' '}
+            Total {types}: {userCount}{' '}
             {isProfitable ? (
               <span className="text-green-500 ml-2">Profitable</span>
             ) : (

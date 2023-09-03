@@ -9,6 +9,7 @@ const SponserRole = require('../middlewares/SponserRole'); //Fetch details of th
 
 //----------------------- Initizlalzing your apis's routes here --------------------X
 Routers.get('/fetchPlaces',BooksControllers().fetchPlaces); //Fetching all the places which are availabel, using GET '/api/v1/book/fetchPlace'
+Routers.get('/showDetails/:id',BooksControllers().showDetails); //Showing only one destination at a time, using GET '/api/v1/book/showDetails/:id'
 Routers.post('/makeRequest/:place_id',FetchUser,BooksControllers().makeRequest); //Make a request by the user to book a place, using POST '/api/v1/book/makeRequest'
 
 Routers.put('/processedRequest/:id', FetchUser, SponserRole ,BooksControllers().processedRequest); //After requesting to processeding the place booking by the sponser '/api/v1/sponser/processedRequest'

@@ -35,10 +35,12 @@ function PlacesControllers() {
         async add(req, res) {
             try {
                 //--------- Req.body content
-                const { name, description, capacity, price, booking_slots, address, available } = req.body;
+                const { name, description, capacity, price, booking_slots, address, available,location } = req.body;
+
+                console.log('req.body ',req.body)
 
                 //Requring all the specific fields
-                if (!name || !description || !capacity || !price || !booking_slots || !address) { return res.status(404).json({ success: false, msg: "All fields are required" }) };
+                if (!name || !description || !capacity || !price || !booking_slots || !address || !location) { return res.status(404).json({ success: false, msg: "All fields are required" }) };
 
                 if (capacity < 0)
                     return res.status(404).json({ success: false, msg: "Capacity can't be negative " })
@@ -60,7 +62,7 @@ function PlacesControllers() {
 
 
                 const place = await PlacesModel.create({
-                    name, description, price, address, capacity, sponser_id: req.user._id, booking_slots, available, picture: {
+                    name, description, price, address, capacity, sponser_id: req.user._id,location, booking_slots, available, picture: {
                         public_id: myCloud.public_id, url: myCloud.secure_url
                     },totalPrice
                 })

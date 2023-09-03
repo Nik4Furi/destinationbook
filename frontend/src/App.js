@@ -7,7 +7,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 
 //Components Stuff
-import PrivateRoute from './components/Layout/PrivateRoute';
+import Layout from './components/Layout/Layout';
+import ProtectedRoute from './components/Layout/ProtectedRoute';
 import AdminLayout from './components/Admin/AdminLayout'
 
 
@@ -22,12 +23,17 @@ import ContactUs from "./pages/ConatctUs";
 import Sponser from "./pages/Sponser";
 
 import Dashboard from './pages/Admin/Dashboard'
+import SponserDashboard from './pages/Sponser/Dashboard'
 import Places from './pages/Admin/Places'
 import Users from './pages/Admin/Users'
 import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentError from "./pages/PaymentError";
 import Error404 from "./pages/Error404";
 import About from "./pages/About";
+import Logout from "./pages/Logout";
+import SponserLayout from "./components/Sponser/SponserLayout";
+import AddPlace from "./pages/Sponser/AddPlace";
+import ShowPlaces from "./pages/Sponser/ShowPlaces";
 
 
 function App() {
@@ -37,77 +43,113 @@ function App() {
         <Routes>
 
           {/* Home page  */}
-          <Route path="/" element={<PrivateRoute>
+          <Route path="/" element={<Layout>
+            {/* <ProtectedRoute> */}
             <Home />
-          </PrivateRoute>} />
+            {/* </ProtectedRoute> */}
+          </Layout>} />
 
           {/* Contact Us page  */}
-          <Route path="/contact" element={<PrivateRoute>
+          <Route path="/contact" element={<Layout>
             <ContactUs />
-          </PrivateRoute>} />
+          </Layout>} />
 
           {/* Contact Us page  */}
-          <Route path="/paymentsuccess" element={<PrivateRoute>
+          <Route path="/paymentsuccess" element={<Layout>
+            <ProtectedRoute>
             {/* <PaymentSuccess /> */}
-            <PaymentError />
-          </PrivateRoute>} />
+            <PaymentError /> </ProtectedRoute>
+          </Layout>} />
 
           {/* Register Page  */}
-          <Route path="/register" element={<Register />} />
+          <Route path="/register" element={<Layout>
+            <Register />
+          </Layout>} />
 
           {/* Login Page  */}
-          <Route path="/login" element={<PrivateRoute>
+          <Route path="/login" element={<Layout>
             <Login />
-          </PrivateRoute>} />
+          </Layout>} />
+
+          {/* Logout page  */}
+          <Route path="/logout" element={<Layout>
+            <ProtectedRoute>
+            <Logout /></ProtectedRoute>
+          </Layout>} />
 
           {/* Login Page  */}
-          <Route path="/about" element={<PrivateRoute>
+          <Route path="/about" element={<Layout>
           <About />
-          </PrivateRoute>} />
+          </Layout>} />
 
           {/* Destination Info Page  */}
-          <Route path="/destinationinfo/:id" element={<PrivateRoute>
+          <Route path="/destinationinfo/:id" element={<Layout>
             <DestinationInfo />
-          </PrivateRoute>} />
+          </Layout>} />
 
           {/*Book Now Page  */}
-          <Route path="/booknow" element={<PrivateRoute>
-            <BookNow />
-          </PrivateRoute>} />
+          <Route path="/booknow/:id" element={<Layout>
+            <ProtectedRoute>
+            <BookNow /> </ProtectedRoute>
+          </Layout>} />
 
           {/*Checkout  Page  */}
-          <Route path="/checkout" element={<PrivateRoute>
-            <Checkout />
-          </PrivateRoute>} />
+          <Route path="/checkout" element={<Layout>
+            <ProtectedRoute>
+            <Checkout /> </ProtectedRoute>
+          </Layout>} />
 
           {/*Sponser  Page  */}
-          <Route path="/sponser" element={<PrivateRoute>
-            <Sponser />
-          </PrivateRoute>} />
+          {/* <Route path="/sponser" element={<Layout>
+            <ProtectedRoute>
+              <SponserLayout>
+            <Sponser /></SponserLayout> </ProtectedRoute>
+          </Layout>} /> */}
+          {/*Sponser  Page  */}
+          <Route path="/sponser" element={<Layout>
+            <ProtectedRoute>
+              <SponserLayout>
+            <SponserDashboard /></SponserLayout> </ProtectedRoute>
+          </Layout>} />
+
+          <Route path="/sponser/addplace" element={<Layout>
+            <ProtectedRoute>
+              <SponserLayout>
+            <AddPlace /></SponserLayout> </ProtectedRoute>
+          </Layout>} />
+
+          <Route path="/sponser/showplaces" element={<Layout>
+            <ProtectedRoute>
+              <SponserLayout>
+            <ShowPlaces /></SponserLayout> </ProtectedRoute>
+          </Layout>} />
 
 
           {/* --------------------- Admin Specific Stuff ------------------X */}
           {/*Admin  Pages  */}
           {/* Dashboard page  */}
-          <Route path="/admin" element={<PrivateRoute>
+          <Route path="/admin" element={<Layout>
+            <ProtectedRoute>
             <AdminLayout>
               <Dashboard />
-            </AdminLayout>
-          </PrivateRoute>} />
+            </AdminLayout> </ProtectedRoute>
+          </Layout>} />
 
           {/* Places page  */}
-          <Route path="/admin/places" element={<PrivateRoute>
+          <Route path="/admin/places" element={<Layout>
+            <ProtectedRoute>
             <AdminLayout>
               <Places />
-            </AdminLayout>
-          </PrivateRoute>} />
+            </AdminLayout> </ProtectedRoute>
+          </Layout>} />
 
           {/* Users page */}
-          <Route path="/admin/users" element={<PrivateRoute>
+          <Route path="/admin/users" element={<Layout>
+            <ProtectedRoute>
             <AdminLayout>
               <Users />
-            </AdminLayout>
-          </PrivateRoute>} />
+            </AdminLayout> </ProtectedRoute>
+          </Layout>} />
 
           {/* Error 404 page */}
           <Route path="*" element={<Error404 />} />

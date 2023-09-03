@@ -53,6 +53,20 @@ function BooksControllers() {
             } catch (error) { return res.status(500).json({ success: false, msg: error.message }); }
         },
 
+        //Show one destination info according to id
+         //Fetch all the places if available, using GET '/api/v1/book/fetchPlaces'
+         async showDetails(req, res) {
+            try {
+                // console.log("show the places ", data, places);
+                const place = await PlacesModel.findById(req.params.id);
+                if(!place) return res.status(409).json({success:false,msg:"Place did'nt found"})
+
+                return res.status(200).json({ success: true, msg: "Fetch all the places successfully", place });
+
+            } catch (error) { return res.status(500).json({ success: false, msg: error.message }); }
+        },
+
+
         //Requesting to place book , using POST '/api/v1/book/makeRequest'
         async makeRequest(req, res) {
             try {
@@ -78,10 +92,11 @@ function BooksControllers() {
                 //------------------ After find the place define the criteria about the date of start and end
                 console.log(start_date, end_date, start_time, end_time);
 
+                // const totalPrice = place.price*capacity;
            
 
                 const book = await BooksModel.create({
-                    place_id, sponser_id:req.user._id, capacity, booking_slots, status: 'pending', bookForWhat
+                    place_id, sponser_id:req.user._id, capacity, booking_slots,start_date,end_date,start_time,end_time, bookForWhat,totalPrice: 0
                 });
 
                 place.noOfTimeBooking += 1;

@@ -49,7 +49,7 @@ function AuthController() {
 
                 return res.status(200).json({success:true,msg:'You are successfully register',users});
                 
-            } catch (error) { return res.status(500).json({success:true,msg:`${error.message}` });  }
+            } catch (error) { return res.status(500).json({success:false,msg:`${error.message}` });  }
         },
 
         //2. Login the users, using POST '/api/user/login'
@@ -63,7 +63,7 @@ function AuthController() {
                 
                 // Check the user is not already register
                 let users = await UserModel.findOne({email})
-                if(!users) { return res.status(401).json({success:false,msg:"this crenditentals's user is not register, Plz login first"})};
+                if(!users) { return res.status(401).json({success:false,msg:"this crenditentals's user is not register, Plz register first"})};
 
                 //Comparing the password of register and login user
                 let isMatch = await bcrypt.compare(password,users.password)
@@ -78,7 +78,7 @@ function AuthController() {
                 
                 return res.status(200).json({success:true,msg:'You are successfully login',token});
                 
-            } catch (error) { return res.status(500).json({success:true,msg:`${error.message}` });  }
+            } catch (error) { return res.status(500).json({success:false,msg:`${error.message}` });  }
         },
 
         //3. Get the info of login user, using GET '/api/user/getUser'
@@ -87,7 +87,7 @@ function AuthController() {
                 // console.log(req.user);
                 return res.status(200).json({success:true,msg:'User found successfully',user:req.user});
 
-            } catch (error) { return res.status(500).json({success:true,msg:`${error.message}` });  }
+            } catch (error) { return res.status(500).json({success:false,msg:`${error.message}` });  }
         },
 
     }

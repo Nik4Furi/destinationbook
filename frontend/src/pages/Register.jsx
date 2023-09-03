@@ -4,17 +4,11 @@ import { Link, useNavigate } from 'react-router-dom'
 
 import { toast } from 'react-toastify'
 
-
-import { useDispatch, useSelector } from 'react-redux'
-
-import { registerUsers } from '../Store/UsersSlice'
 import Navbar from '../components/Layout/Navbar';
 import Loading from '../components/Loading';
 
 const Register = () => {
-    const dispatch = useDispatch();
     const navigate = useNavigate();
-    const users = useSelector(state => state.users);
 
     const [loading, setLoading] = useState(false);
 
@@ -36,76 +30,79 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        // console.log(formData);
+
+        if (formData.password !== formData.cpassword) {
+            toast.error("Password and confirm password didn't match")
+
+            setFormData({ name: formData.name, email: formData.email, phone: formData.phone, address: formData.address, password: '', cpassword: '' });
+
+            setLoading(false);
+            return;
+        }
+
+        if (/[a-z0-9]+@[a-z]+\.[a-z]{2,3}/.test(formData.email) === false) {
+            toast.error(`${formData.email} is not valid email`)
+
+            setFormData({ name: formData.name, email: "", phone: formData.phone, address: formData.address, password: '', cpassword: '' })
+
+            setLoading(false);
+            return;
+        }
+
+        if (/^\d{10}$/.test(formData.phone) === false) {
+            toast.error("Please provide a valid phone no.")
+
+            setFormData({ name: formData.name, email: formData.email, phone: '', address: formData.address, password: '', cpassword: '' })
+
+            setLoading(false);
+            return;
+        }
+
+
+        if (formData.phone < 0) {
+            toast.error("Phone mustn't negative")
+            setFormData({ name: formData.name, email: formData.email, phone: '', address: formData.address, password: '', cpassword: '' })
+            setLoading(false);
+            return;
+        }
+
         try {
+            const res = await fetch(`${process.env.REACT_APP_API}user/register`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+            const data = await res.json();
 
-            if (formData.password !== formData.cpassword) {
-                toast.error("Password and confirm password didn't match")
+            console.log('check actuall data is ', data);
 
-                setFormData({ name: formData.name, email: formData.email, phone: formData.phone, address: formData.address, password: '', cpassword: '' })
-
-                return;
+            if (data.success === true) {
+                toast.success(`${data.msg}`);
+                setLoading(false);
+                navigate('/login');
             }
-
-            if(/[a-z0-9]+@[a-z]+\.[a-z]{2,3}/.test(formData.email) === false){
-                toast.error("Password and confirm password didn't match")
-
-                setFormData({ name: formData.name, email: "", phone: formData.phone, address: formData.address, password: '', cpassword: '' })
-
-                return;
+            else if (data.success === false) {
+                toast.error(`${data.msg}`);
             }
-
-            if (/^\d{10}$/.test(formData.phone) === false) {
-                toast.error("Please provide a valid phone no.")
-
-                setFormData({ name: formData.name, email: formData.email, phone: '', address: formData.address, password: '', cpassword: '' })
-
-                return;
-            }
-
-
-            if (formData.phone < 0) {
-                toast.error("Phone mustn't less than 0")
-
-                setFormData({ name: formData.name, email: formData.email, phone: '', address: formData.address, password: '', cpassword: '' })
-
-                return;
-            }
-
-            await dispatch(registerUsers(formData));
-
-            // console.log('check users ',users);
-            // toast.success('You are register successfully');
-
-            navigate('/login');
-
-            if(users.status === "success"){
-                toast.success(`${users.msg}`);
-                return;
-            }
-            else if(users.status === 'error'){
-                toast.error(`${users.msg}`);
-                return;
-            }
-
-            // toast.success('You are register successfully');
-
-            // navigate('/login')
-            // console.log('check users state ', users);
 
         } catch (error) {
             console.log(error);
-            toast.error(`${error}`);
+            toast.error(`${error.message}`);
+            setLoading(false);
+
+            setFormData({ name: formData.name, email: formData.email, phone: formData.phone, address: formData.address, password: '', cpassword: '' })
+            return;
         }
 
         setLoading(false);
-        setFormData({name:'',email:'',phone:'',address:'',password:'',cpassword:''})
+
+        setFormData({ name: '', email: '', phone: '', address: '', password: '', cpassword: '' })
     };
 
     return (
         <>
-            {/* Navbar Component  */}
-            <Navbar />
             <div className="mx-auto p-4 bg-slate-100">
                 {/* <h1 className="text-2xl font-semibold mb-4">Register</h1> */}
                 <form onSubmit={handleSubmit} className="max-w-md mx-auto">

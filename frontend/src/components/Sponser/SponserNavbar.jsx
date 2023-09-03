@@ -2,7 +2,7 @@ import React from 'react'
 
 import {Link} from 'react-router-dom'
 
-const Navbar = ({name,tabs,tabsLink}) => {
+const Navbar = () => {
     return (
         <>
             {/* Here we include the name of the Admin  */}
@@ -13,7 +13,7 @@ const Navbar = ({name,tabs,tabsLink}) => {
                     <Link to="/admin"> <span className="mx-2 text-blue-400"> Dashboard</span></Link>
                     <Link to="/admin/places"> <span className="mx-2 text-blue-400"> Places</span></Link>
                     <Link to="/admin/users"> <span className="mx-2 text-blue-400"> Users</span></Link>
-                    <Link to="/logout"> <span className="mx-2 text-blue-400"> Logout</span></Link>
+                    <Link to="/logout"> <span className="mx-2 text-blue-400"> Logut</span></Link>
           
                 </div>
 

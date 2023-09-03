@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
 
-//Booking slots in our app
-const BookingTime = Object.freeze({
+//Slots for places 
+const BookingSlots = Object.freeze({
     MORNING: 'morning',
-    AFTERNOON: 'afternoon',
+    AFTERNOON : 'afternoon',
+    EVENING: 'evening',
     NIGHT: 'night',
     ANY : 'anytime'
 })
@@ -24,19 +25,21 @@ const BooksSchema = new mongoose.Schema({
 
     capacity:Number,
 
-    booking_slots: { type: String, enum: BookingTime },
+    totalPrice: Number,
+
+    booking_slots: { type: String, enum: BookingSlots },
 
     start_date : {type:Date,default:Date.now},
 
     end_date : Date,
 
-    start_time : {type:Date,default:Date.now},
+    start_time : {type:String,default:Date.now},
 
-    end_time : Date,
+    end_time : String,
 
     bookForWhat : String,
 
-    status : {type:String, enum:Requests},
+    status : {type:String, enum:Requests,default:Requests.PENDING},
 
 }, { timestamps: true })
 

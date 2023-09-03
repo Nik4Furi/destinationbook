@@ -10,8 +10,7 @@ const Dashboard = () => {
 
         {/* Stats card to analyzing  */}
         <div className="grid grid-cols-3 gap-2">
-            <StatsCard Stats={"Users"} color={"blue"} userCount={34} isProfitable={true} />
-            <StatsCard Stats={"Sponsers"} color={"red"} userCount={24} isProfitable={true} />
+            <StatsCard types={'Booked Places'} Stats={"Places"} color={"blue"} userCount={344} isProfitable={true} />
         </div>
       </div>
     </>
