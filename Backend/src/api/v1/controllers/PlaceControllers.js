@@ -31,6 +31,28 @@ function PlacesControllers() {
             } catch (error) { return res.status(500).json({ success: false, msg: error.message }) }
         },
 
+        //Fetch all the places , using GET '/api/v1/place/fetch'
+        async fetchDetails(req, res) {
+            try {
+                //Finding the places we match the condition
+                let places = await PlacesModel.findOne({_id:req.params.id});
+                if(!places)
+                    return res.status(409).json({success:false,msg:"Didn't find the place"})
+                // console.log(places);
+                // let places = await PlacesModel.find({
+                //     sponser_id: req.user._id,
+                //     $or: [
+                //         { name }, { capacity }, { price }, { address }
+                //     ]
+                // }).where('available').equals(true);
+
+                console.log('check places ', places);
+
+                return res.status(200).json({ success: true, msg: 'fetching the places', places });
+
+            } catch (error) { return res.status(500).json({ success: false, msg: error.message }) }
+        },
+
         //Adding a new place, using POST '/api/v1/place/add'
         async add(req, res) {
             try {

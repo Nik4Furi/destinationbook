@@ -66,6 +66,33 @@ function BooksControllers() {
             } catch (error) { return res.status(500).json({ success: false, msg: error.message }); }
         },
 
+         //Fetch all places which is booked by this user, using GET '/api/v1/book/fetchAllBooked'
+         async FetchAllBooked(req, res) {
+            try {
+                // console.log("show the places ", data, places);
+                // const places = await BooksModel.find({booked_by:req.user._id}).populate('place_id').select('place_id');
+                const places = await BooksModel.find({booked_by:req.user._id}).populate('place_id');
+                if(!places) return res.status(409).json({success:false,msg:"Place did'nt found"});
+                console.log('fetch booked places ',places);
+
+                return res.status(200).json({ success: true, msg: "Fetch all the places successfully", places });
+
+            } catch (error) { return res.status(500).json({ success: false, msg: error.message }); }
+        },
+
+
+         //Removing the booked places, using DELETE '/api/v1/book/removeBooked/:id'
+         async removeBooked(req, res) {
+            try {
+                const removeBooked = await BooksModel.deleteOne({_id:req.params.id});
+
+                if(!removeBooked) return res.status(409).json({success:false,msg:"Can't removing the details of booked place"});
+
+                return res.status(200).json({ success: true, msg: "Removing the details of the booked place successfully"});
+
+            } catch (error) { return res.status(500).json({ success: false, msg: error.message }); }
+        },
+
 
         //Requesting to place book , using POST '/api/v1/book/makeRequest'
         async makeRequest(req, res) {
@@ -92,11 +119,11 @@ function BooksControllers() {
                 //------------------ After find the place define the criteria about the date of start and end
                 console.log(start_date, end_date, start_time, end_time);
 
-                // const totalPrice = place.price*capacity;
-           
+                const totalPrice = place.price*capacity;
+                console.log('total ',totalPrice);
 
                 const book = await BooksModel.create({
-                    place_id, sponser_id:req.user._id, capacity, booking_slots,start_date,end_date,start_time,end_time, bookForWhat,totalPrice: 0
+                    place_id, booked_by:req.user._id, capacity, booking_slots,start_date,end_date,start_time,end_time, bookForWhat,totalPrice
                 });
 
                 place.noOfTimeBooking += 1;
@@ -139,7 +166,7 @@ function BooksControllers() {
         async successRequest(req, res) {
             try {
                 //--------------- Find the place according to the id
-                let book = await BooksModel.findOne({ place_id: req.params.id, sponser_id: req.user._id });
+                let book = await BooksModel.findOne({ place_id: req.params.id});
 
                 if (!book) return res.status(404).json({ success: false, msg: "Can't find the booked place, please check again" });
 
@@ -157,7 +184,7 @@ function BooksControllers() {
         async cancelRequest(req, res) {
             try {
                 //--------------- Find the place according to the id
-                let book = await BooksModel.findOne({ place_id: req.params.id, sponser_id: req.user._id });
+                let book = await BooksModel.findOne({ place_id: req.params.id});
 
                 if (!book) return res.status(404).json({ success: false, msg: "Can't find the booked place, please check again" });
 

@@ -21,7 +21,7 @@ const BooksSchema = new mongoose.Schema({
 
     place_id : { type:mongoose.Schema.Types.ObjectId,ref:'Place'  },
 
-    sponser_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    booked_by: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 
     capacity:Number,
 

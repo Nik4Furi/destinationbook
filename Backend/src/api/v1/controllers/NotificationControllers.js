@@ -37,7 +37,7 @@ function NotificationControllers() {
         async delete(req, res) {
             try {
 
-                const notification = await NotificationModel.deleteOne({ receiver: req.user._id, _id: req.params.id })
+                const notification = await NotificationModel.deleteOne({ _id: req.params.id })
 
                 if (!notification) return res.status(404).json({ success: false, msg: "Can't delete the message" })
 

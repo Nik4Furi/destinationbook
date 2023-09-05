@@ -34,6 +34,10 @@ import Logout from "./pages/Logout";
 import SponserLayout from "./components/Sponser/SponserLayout";
 import AddPlace from "./pages/Sponser/AddPlace";
 import ShowPlaces from "./pages/Sponser/ShowPlaces";
+import EditDetails from "./pages/Sponser/EditDetails";
+import CheckDashboard from "./components/Layout/CheckDashboard";
+import UserDashboard from "./pages/User/UserDashboard";
+import UserLayout from "./components/User/UserLayout";
 
 
 function App() {
@@ -99,6 +103,21 @@ function App() {
             <Checkout /> </ProtectedRoute>
           </Layout>} />
 
+{/* Checking the dashboard of the users  */}
+<Route path="/checkDashboard" element={<Layout>
+            <ProtectedRoute>
+            <CheckDashboard /> </ProtectedRoute>
+          </Layout>} />
+
+          {/* Users Pages  */}
+<Route path="/userDashboard" element={<Layout>
+            <ProtectedRoute>
+              <UserLayout >
+            <UserDashboard />
+            </UserLayout> </ProtectedRoute>
+          </Layout>} />
+
+
           {/*Sponser  Page  */}
           {/* <Route path="/sponser" element={<Layout>
             <ProtectedRoute>
@@ -122,6 +141,12 @@ function App() {
             <ProtectedRoute>
               <SponserLayout>
             <ShowPlaces /></SponserLayout> </ProtectedRoute>
+          </Layout>} />
+
+          <Route path="/sponser/editDetails/:id" element={<Layout>
+            <ProtectedRoute>
+              <SponserLayout>
+            <EditDetails /></SponserLayout> </ProtectedRoute>
           </Layout>} />
 
 

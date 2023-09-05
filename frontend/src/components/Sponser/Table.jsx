@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import { toast } from 'react-toastify';
 
@@ -9,7 +9,7 @@ import SponserModal from './SponserModal';
 import Loading from '../Loading'
 
 const Table = ({ heading, para, col1, col2, col3 }) => {
-  
+
   const token = localStorage.getItem('token');
 
   const [places, setPlaces] = useState([]);
@@ -25,9 +25,6 @@ const Table = ({ heading, para, col1, col2, col3 }) => {
       const data = await res.json();
       console.log('data ', data);
 
-      if (data.length === 0)
-        toast.success('No place item is ,Here!');
-
       setPlaces(data.places);
 
     } catch (error) {
@@ -40,12 +37,12 @@ const Table = ({ heading, para, col1, col2, col3 }) => {
     fetchPlaces(); //Fetch all the places according sponser
   }, []);
 
-  const [loading,setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   //-------------- Modal Specific Stuff to handle the logic
   const [isOpen, setIsOpen] = useState(false);
   const [closeModal, setCloseModal] = useState(true);
-  const [id,setId] = useState(null);
+  const [id, setId] = useState(null);
 
   //Function to edit the data help of the model 
   const handleEditPlace = (id) => {
@@ -53,7 +50,7 @@ const Table = ({ heading, para, col1, col2, col3 }) => {
 
     setIsOpen(true);
 
-setId(id)
+    setId(id)
 
 
   }
@@ -67,7 +64,7 @@ setId(id)
     setLoading(true);
     try {
       const res = await fetch(`${process.env.REACT_APP_API}sponser/delete/${id}`, {
-        method : 'DELETE',
+        method: 'DELETE',
         headers: {
           'auth-token': token
         }
@@ -115,16 +112,16 @@ setId(id)
             </thead>
             <tbody>
               {
-                places.length === 0 ?
-                <tr>
-                  <td>
-                 <h3 className="text-semibold">No items is here, please add new</h3>
-                 </td>
-                </tr>
-                : ''
+                !places?
+                  <tr>
+                    <td>
+                      <h3 className="text-semibold">No items is here, please add new</h3>
+                    </td>
+                  </tr>
+                  : ''
               }
               {
-                places.map((item, index) => (
+                places && places.map((item, index) => (
                   <tr key={index}>
                     <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-300">
                       {item.name}
@@ -137,7 +134,7 @@ setId(id)
                       <img src={item.picture.url} alt="Palace on wheels" style={{ maxWidth: "203px" }} />
                     </td>
                     <td className="px-6 py-4 whitespace-no-wrap text-sm leading-5 border-b border-gray-300">
-                  <button onClick={()=> handleEditPlace(item._id)} className="my-2 px-2 ml-2 w-full bg-indigo-500 text-white py-2 rounded-md hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600">Edit</button>
+                      <Link to={`/sponser/editDetails/${item._id}`}> <button className="my-2 px-2 ml-2 w-full bg-indigo-500 text-white py-2 rounded-md hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600">Show More...</button></Link>
                       <button onClick={() => handleDeletePlace(item._id)} className="my-2 px-2 ml-2 w-full bg-red-500 text-white py-2 rounded-md hover:bg-red-600 focus:outline-none focus:bg-red-600">Delete</button>
                     </td>
                   </tr>
@@ -162,9 +159,9 @@ setId(id)
 
                     {/* <button onClick={() => handleEditPlace(item._id)} className="my-2 px-2 ml-2 w-full bg-indigo-500 text-white py-2 rounded-md hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600">Edit</button>
                     <button onClick={() => handleDeletePlace(item._id)} className="my-2 px-2 ml-2 w-full bg-red-500 text-white py-2 rounded-md hover:bg-red-600 focus:outline-none focus:bg-red-600">Delete</button> */}
-                  {/* </div>
+              {/* </div>
                 </td>
-              </tr> */} 
+              </tr> */}
             </tbody>
           </table>
         </div>

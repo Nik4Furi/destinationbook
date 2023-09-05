@@ -5,19 +5,6 @@ import { toast } from 'react-toastify';
 import Loading from '../Loading'
 
 function AddPlaceForm() {
-  const searchParams = new URLSearchParams(document.location.search)
-  console.log(searchParams.get('data'));
-
-  useEffect(()=>{
-    if (searchParams.get('data')) {
-      //Call api to fetch data
-      
-
-    
-    }
-  },[])
-
-
   // State to manage form inputs
  
   const [formData, setFormData] = useState({

@@ -19,7 +19,7 @@ const Navbar = () => {
                     <Link to={"/"}> <h2 className="text-white text-xl font-semibold">DestinationBook</h2></Link>
                     <ul className="flex space-x-2 mx-auto my-auto">
                         <li className="text-white font-semibold hover:text-blue-100">
-                            <Link to="/">Home</Link>
+                            {/* <Link to="/">Home</Link> */}
                         </li>
                         <li className="text-white  font-semibold hover:text-purple-300">
                             <Link to="/about">About</Link>
@@ -33,8 +33,9 @@ const Navbar = () => {
                     
                         {
                             users.user ?
-                                <div className='flex items-center overflow-hidden'>
-                                  {/* <Link to={"/admin"}> <div style={{border:"1px solid white",padding:'2px',borderRadius:"50%"}}> <img src={user} alt="user" style={{width:"50px",padding:'0',margin:'0'}}/></div> </Link>  */}
+                                <div className='relative flex items-center overflow-hidden'>
+                                    <Link  to={"/checkDashboard"}>
+                                   <div className='mx-4' style={{border:"1px solid white",padding:'2px',borderRadius:"50%"}}> <img src={user} alt="user"  style={{width:"30px",padding:'0',margin:'0'}}/></div></Link>
                                     <NotificationIcon count={0} />
                                 </div>
                                 :

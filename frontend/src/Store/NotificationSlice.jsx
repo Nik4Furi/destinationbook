@@ -15,7 +15,7 @@ const NotificationSlice = createSlice({
 
         //Remove User
         removeNotification(state,action){
-            return state.notifications.filter(item => item._id !== action.payload);
+            return state.notifications?.filter(item => item._id !== action.payload);
         },
 
         //Update notifications true

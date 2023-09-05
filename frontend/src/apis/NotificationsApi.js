@@ -1,3 +1,5 @@
+const token = localStorage.getItem('token');
+
 //------------ Function to send the notifications
 const sendNotification = async (msg,id) => {
     try {
@@ -32,6 +34,25 @@ export const getAllNotifications = async () => {
         });
         const data = await res.json();
         console.log('this is data ',data);
+
+    } catch (error) {
+        console.log('error ', error);
+    }
+}
+
+//-------------------- Function to get all the notification of respective user
+export const DeleteNotifications = async (id) => {
+    //----------- Call the api to delete the notification
+    try {
+
+        const res  = await fetch(`${process.env.REACT_APP_API}notification/delete/${id}`,{
+          method : 'DELETE',
+          headers : {
+            'auth-token' : token
+          }
+        });
+        const data = await res.json();
+        return data;
 
     } catch (error) {
         console.log('error ', error);

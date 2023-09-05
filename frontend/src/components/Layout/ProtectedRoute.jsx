@@ -14,6 +14,9 @@ const ProtectedRoute = ({ children }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
+    
+    const token = localStorage.getItem('token');
+
     const [userdetails, setUserDetails] = useState(null);
     const [notifications, setNotification] = useState([]);
 
@@ -49,7 +52,6 @@ const ProtectedRoute = ({ children }) => {
     //-------------------- Function to get all the notification of respective user
     const getAllNotifications = async () => {
         try {
-            const token = localStorage.getItem('token');
 
             const res = await fetch(`${process.env.REACT_APP_API}notification/getAllNotifications`, {
                 headers: {

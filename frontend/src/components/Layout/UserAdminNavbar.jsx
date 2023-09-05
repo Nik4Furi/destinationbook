@@ -12,7 +12,7 @@ const UserAdminNavbar = ({ name, tabs }) => {
                 <div>
                     {
                         tabs.map((item) => (
-                            <Link key={item[0]} to={item[1]}> <span className="mx-2 text-blue-400"> {item[0]}</span></Link>
+                            <Link key={item[0]} to={`${item[1]}`}> <span className="mx-2 text-blue-400"> {item[0]}</span></Link>
                         ))
                     }
                     <Link to="/logout"> <span className="mx-2 text-blue-400"> Logout</span></Link>
