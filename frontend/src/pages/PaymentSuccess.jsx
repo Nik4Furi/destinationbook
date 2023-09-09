@@ -1,6 +1,7 @@
 import React from 'react';
 
 import confeti from '../assets/confeti.avif'
+import { Link } from 'react-router-dom';
 
 const PaymentSuccess = () => {
   return (
@@ -16,9 +17,9 @@ const PaymentSuccess = () => {
           Thank you for your payment. Your transaction was successful.
         </p>
         <div className="mt-8">
-          <button className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">
+       <Link  to={'/'}> <button className="btn-primary py-2 px-4 rounded-md ">
             Back To Home
-          </button>
+          </button></Link>  
         </div>
       </div>
     </div>

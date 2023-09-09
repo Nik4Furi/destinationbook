@@ -19,7 +19,7 @@ const Layout = ({ children }) => {
     //Check login user details and save into state
     const getUser = async () => {
         try {
-            if(token){
+            if (token) {
                 const res = await fetch(`${process.env.REACT_APP_API}user/getUser`, {
                     method: 'GET',
                     headers: {
@@ -30,7 +30,7 @@ const Layout = ({ children }) => {
                 const data = await res.json();
 
                 dispatch(setUser(data.user));
-            }            
+            }
 
         } catch (error) {
             console.log('error ', error.message);
@@ -41,7 +41,7 @@ const Layout = ({ children }) => {
     const getAllNotifications = async () => {
         try {
 
-            if(token){
+            if (token) {
                 const res = await fetch(`${process.env.REACT_APP_API}notification/getAllNotifications`, {
                     headers: {
                         'Content-Type': 'application/json',
@@ -49,7 +49,7 @@ const Layout = ({ children }) => {
                     }
                 });
                 const data = await res.json();
-    
+
                 dispatch(setNotfications(data.notification));
             }
 
@@ -70,6 +70,7 @@ const Layout = ({ children }) => {
             {/* Navbar Component  */}
             <Navbar />
 
+            {/* Content Children components to show the data of pages  */}
             {children}
 
             {/* Footer Component  */}

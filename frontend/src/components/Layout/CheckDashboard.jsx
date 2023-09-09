@@ -1,19 +1,27 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
+import Loading from '../Loading';
 
 const CheckDashboard = () => {
-    const user = useSelector(state => state.users.user);
-    const navigate = useNavigate();
+  const user = useSelector(state => state.users.user);
+  const navigate = useNavigate();
 
-    if(user.role === 'user')
-        navigate('/userDashboard');
+  useEffect(() => {
 
-    else if(user.role === 'admin')
-        navigate('/admin');
-    
-    else if(user.role === 'sponser')
-        navigate('/sponser');
+    if (user.role === 'user')
+      navigate('/userDashboard');
+
+    else if (user.role === 'admin')
+      navigate('/admin');
+
+    else if (user.role === 'sponser')
+      navigate('/sponser');
+  }, []);
+
+  if (!user) {
+    return <Loading />
+  }
 
   return (
     <>

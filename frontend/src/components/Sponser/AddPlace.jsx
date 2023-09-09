@@ -17,6 +17,7 @@ function AddPlaceForm() {
     location: '',
     booking_slots: 'morning',
     available: false,
+    farFromMetro : ''
   });
   const [loading, setLoading] = useState(false);
 
@@ -51,6 +52,30 @@ function AddPlaceForm() {
     }));
   };
 
+  //------------------------- Keywords Specific Stuff to store the keywords --------X
+  const [inputValue, setInputValue] = useState('');
+  const [keywords, setKeywords] = useState([]);
+
+  const handleInputKeywordChange = (e) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleInputKeyDown = (e) => {
+    if (e.key === 'Enter' || e.key === ',') {
+      // Prevent adding empty or duplicate keywords
+      if (inputValue.trim() !== '' && !keywords.includes(inputValue.trim())) {
+        setKeywords([...keywords, inputValue.trim()]);
+      }
+      setInputValue('');
+    }
+  };
+
+  const handleRemoveKeyword = (index) => {
+    const updatedKeywords = [...keywords];
+    updatedKeywords.splice(index, 1);
+    setKeywords(updatedKeywords);
+  };
+
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -72,6 +97,13 @@ function AddPlaceForm() {
       return;
     }
 
+    if(Number(!formData.farFromMetro) < 0){
+      toast.error("Distance can't be negative");
+      setFormData({ ...formData, farFromMetro: '' });
+      setLoading(false);
+      return;
+    }
+
     if (!formData.file) {
       toast.warn("This image format can't support");
       setFormData({ ...formData, file: '' });
@@ -89,6 +121,9 @@ function AddPlaceForm() {
     addPlaceData.append('location', formData.location);
     addPlaceData.append('booking_slots', formData.booking_slots);
     addPlaceData.append('available', formData.available);
+    addPlaceData.append('farFromMetro', formData.farFromMetro);
+    addPlaceData.append('keywords', keywords);
+
 
     console.log('form data ', formData);
 
@@ -130,7 +165,9 @@ function AddPlaceForm() {
       location: '',
       booking_slots: 'morning',
       available: false,
-    })
+      farFromMetro : ''
+    });
+    setKeywords([]);
   };
 
   return (
@@ -146,6 +183,7 @@ function AddPlaceForm() {
             name="name"
             value={formData.name}
             onChange={handleInputChange}
+            placeholder='Write catchy name of the place'
             required
             minLength={5}
             maxLength={250}
@@ -161,6 +199,7 @@ function AddPlaceForm() {
             name="description"
             value={formData.description}
             onChange={handleInputChange}
+            placeholder='Describe your place details so give the meaning to client why need to book'
             rows="3"
             required
             minLength={9}
@@ -212,6 +251,21 @@ function AddPlaceForm() {
           />
         </div>
         <div className="mb-4">
+          <label htmlFor="farFromMetro" className="block text-sm font-medium">
+           How Far From Metro/Station/Subways
+          </label>
+          <input
+            type="Number"
+            id="farFromMetro"
+            name="farFromMetro"
+            value={formData.farFromMetro}
+            onChange={handleInputChange}
+            required
+            placeholder='Write distance in kilo meter'
+            className="border p-2 w-full"
+          />
+        </div>
+        <div className="mb-4">
           <label htmlFor="location" className="block text-sm font-medium">
             Location
           </label>
@@ -255,6 +309,29 @@ function AddPlaceForm() {
             placeholder='Write your detail address of location'
           ></textarea>
         </div>
+        {/* Keywords Components to storing keywords  */}
+        {/* <KeywordInput /> */}
+        <div className="mb-4">
+        <input
+          type="text"
+          placeholder="Add keywords (separate with commas)"
+          className="border p-2 w-full"
+          value={inputValue}
+          onChange={handleInputKeywordChange}
+          onKeyDown={handleInputKeyDown}
+        />
+      </div>
+      <div className='mb-4'>
+        {keywords.map((keyword, index) => (
+          <span
+            key={index}
+            className="bg-blue-500 text-white px-2 py-1 rounded-full text-sm m-1 cursor-pointer"
+            onClick={() => handleRemoveKeyword(index)}
+          >
+            {keyword} <span className="ml-1">&#10005;</span>
+          </span>
+        ))}
+      </div>
         <div className="mb-4">
           <label className="block text-sm font-medium">Available</label>
           <div className="flex items-center">

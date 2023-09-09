@@ -9,7 +9,7 @@ import dest from '../../assets/dest-1.jpg'
 
 import Loading from '../Loading'
 
-const Destinations = () => {
+const Destinations = ({results}) => {
     const [placesDetails,setPlacesDetails] = useState([]);
     const [loading,setLoading] = useState(false);
 
@@ -44,11 +44,17 @@ const Destinations = () => {
     return (
         <>
             <div className="container mx-auto">
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid md:grid-cols-3 gap-3 grid-cols-2">
                     {  loading && <Loading /> }
                     {
+                        (results.length === 0 || !results)
+                        ?
                         places && places.places.map((item)=>{
-                            return  <DestinationCard key={item._id} img={item.picture.url} heading={item.name} descripiton={item.description} id={item._id} />
+                            return  <DestinationCard key={item._id} img={item.picture.url} heading={item.name} descripiton={item.description.substr(0,90)} id={item._id} />
+                        })
+                   :
+                        results && results.map((item)=>{
+                            return  <DestinationCard key={item._id} img={item.picture.url} heading={item.name} descripiton={(item.description).substr(0,90)} id={item._id} />
                         })
                     }
                     {/* <DestinationCard img={dest} heading={"A lot of choices"} descripiton={"Choose to best space is fit on you"} />

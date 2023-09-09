@@ -32,20 +32,20 @@ const About = () => {
 
                     {/* Image stuff to show something about the booking */}
                     <div>
-                        <img src={about} alt="about us" className='' style={{width:"80%"}} />
+                        <img src={about} alt="about us" className='md:block hidden' style={{width:"80%"}} />
                     </div>
                 </div>
             </section>
 
             {/* Our services section to show case our services  */}
             <section id="Services">
-                <div className="container mx-auto my-2">
+                <div className="container mx-auto my-2 p-2">
                     <h1 className="text-3xl font-bold text-center my-2">About Our Services</h1>
                     <p className="text-center">Want to become a sponser, can contact with us <Link to="/contact" className="text-blue-500">Here</Link> or can directly connect with social media</p>
 
                     {/* Card section of our services  */}
                     <div className="container my-2 mx-auto">
-                        <div className="grid grid-cols-3 gap-4">
+                        <div className="grid md:grid-cols-3 gap-4 grid-cols-2 ">
                             <ServiceCard img={"🌎"} title={"Lot Of Choices"} description={"total 400+ destination work with us"} />
                             <ServiceCard img={"🎒"} title={"Best Tour Guides"} description={"Our tour guid have 5+ expereince"} />
                             <ServiceCard img={"💳"} title={"Easy Booking"} description={"With an easy and fast ticket purchase process"} />

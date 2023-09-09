@@ -1,4 +1,9 @@
+import React, {useEffect} from 'react'
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 
 import { ToastContainer} from 'react-toastify';
@@ -41,6 +46,9 @@ import UserLayout from "./components/User/UserLayout";
 
 
 function App() {
+  useEffect(() => {
+    AOS.init();
+  }, [])
   return (
     <>
       <BrowserRouter>
@@ -61,8 +69,9 @@ function App() {
           {/* Contact Us page  */}
           <Route path="/paymentsuccess" element={<Layout>
             <ProtectedRoute>
-            {/* <PaymentSuccess /> */}
-            <PaymentError /> </ProtectedRoute>
+            <PaymentSuccess />
+            {/* <PaymentError /> */}
+             </ProtectedRoute>
           </Layout>} />
 
           {/* Register Page  */}
@@ -183,7 +192,7 @@ function App() {
 
         </Routes>
 
-        <ToastContainer autoClose={2500} />
+        <ToastContainer autoClose={1500} />
       </BrowserRouter>
 
     </>

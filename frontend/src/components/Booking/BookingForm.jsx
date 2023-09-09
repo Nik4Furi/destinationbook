@@ -41,7 +41,7 @@ const BookingForm = ({ id,findPlace }) => {
 
         setLoading(true);
 
-        console.log('find place ',findPlace)
+        // console.log('find place ',findPlace)
 
         //------------ Filtering the places where the id is match
         // const findPlace = places.places.filter(item => (item._id === id));
@@ -95,22 +95,15 @@ const BookingForm = ({ id,findPlace }) => {
         
         const end_date = new Date(formData.end_date);
 
-        // if(start_date < today ){
-        //     toast.warn("You can't choose date which is old from today");
-        //     setFormData({
-        //         name: formData.name,
-        //         capacity: formData.capacity,
-        //         booking_slots: formData.booking_slots, // Default value
-        //         bookForWhat: formData.bookForWhat,
-        //         start_date: '',
-        //         end_date: '',
-        //         start_time: formData.start_time,
-        //         end_time: formData.end_time
-        //     });
+        // console.log('start_date and today  or result ',start_date,today,start_date<today);
+        // return;
 
-        //     setLoading(false);
-        //     return;
-        // }
+        if(start_date < today ){
+            toast.warn("You can't choose date which is old from today");
+            setFormData({ ...formData,  start_date: '', end_date: '',});
+            setLoading(false);
+            return;
+        }
 
         const timeDifference = end_date - start_date;
         const daysDifference = Math.floor(timeDifference / (1000 * 3600 * 24));
@@ -147,6 +140,8 @@ const BookingForm = ({ id,findPlace }) => {
             end_date: formData.end_date,
             bookForWhat: formData.bookForWhat
         }
+        // console.log('user data ',usersData);
+        // return;
 
         //---------------- Call the api to send the request to sponser for further procesuder
         try {
@@ -163,21 +158,24 @@ const BookingForm = ({ id,findPlace }) => {
                 body: JSON.stringify(usersData)
             });
             const data = await res.json();
-            console.log('check booking ', data);
+            // console.log('check booking ', data);
 
             localStorage.setItem('booking',data.book);
 
             dispatch(setBooking(data.book));
 
             if (data.success === true) {              
-              
+              console.log('find place id ',findPlace[0]._id);
                 //--- clients can successfully give the notification to the sponser
                 const msg = {
                     title : `${user.user.name} is want to book a place`,
                     message: `${user.user.name} is want to book a place with ${formData.capacity} capacity, and total price is ${totalPrice}.`,
                     sender: user.user._id,
-                    receiver: findPlace[0].sponser_id
+                    receiver: findPlace[0].sponser_id,
+                    place_id : findPlace[0]._id
                 };
+
+                console.log('msg to send ',msg);
 
                 await sendNotification(msg,findPlace[0].sponser_id);
                 toast.success(data.msg);
@@ -263,50 +261,50 @@ const BookingForm = ({ id,findPlace }) => {
                 </div>
 
                 <div className="mb-4">
-                    <label htmlFor="start_date" className="block text-gray-700">Start Date</label>
+                    <label htmlFor="start_date" className="block text-gray-700 cursor-pointer">Start Date</label>
                     <input
                         type="date"
                         id="start_date"
                         name="start_date"
                         value={formData.start_date}
                         onChange={handleChange}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 cursor-pointer"
                         required
                     />
                 </div>
                 <div className="mb-4">
-                    <label htmlFor="end_date" className="block text-gray-700">End Date</label>
+                    <label htmlFor="end_date" className="block text-gray-700 cursor-pointer">End Date</label>
                     <input
                         type="date"
                         id="end_date"
                         name="end_date"
                         value={formData.end_date}
                         onChange={handleChange}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 cursor-pointer"
                         required
                     />
                 </div>
                 <div className="mb-4">
-                    <label htmlFor="start_time" className="block text-gray-700">Start Time</label>
+                    <label htmlFor="start_time" className="block text-gray-700 cursor-pointer">Start Time</label>
                     <input
                         type="time"
                         id="start_time"
                         name="start_time"
                         value={formData.start_time}
                         onChange={handleChange}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 cursor-pointer"
                         required
                     />
                 </div>
                 <div className="mb-4">
-                    <label htmlFor="end_time" className="block text-gray-700">End Time</label>
+                    <label htmlFor="end_time" className="block text-gray-700 cursor-pointer">End Time</label>
                     <input
                         type="time"
                         id="end_time"
                         name="end_time"
                         value={formData.end_time}
                         onChange={handleChange}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 cursor-pointer"
                         required
                     />
                 </div>
@@ -314,15 +312,15 @@ const BookingForm = ({ id,findPlace }) => {
                 <div className="mb-4">
                     {
                         loading
-                            ? <button
-                                type="submit"
-                                className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+                            ? 
+                            <button
+                                className="w-full btn-primary py-2 rounded-md focus:outline-none "
                             >
                                 <Loading />
                             </button>
                             : <button
                                 type="submit"
-                                className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+                                className="w-full  py-2 rounded-md btn-primary focus:outline-none "
                             >
                                 Book Now
                             </button>

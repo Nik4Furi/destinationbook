@@ -9,13 +9,23 @@ function NotificationControllers() {
         async add(req, res) {
             try {
 
-                const { title, message } = req.body;
+                const { title, message,place_id } = req.body;
 
-                if (!title || !message) return res.status(409).json({ success: false, msg: 'All fields are required' })
+                if (!title || !message ) return res.status(409).json({ success: false, msg: 'All fields are required' })
 
-                const notification = await NotificationModel.create({
-                    title, message, sender: req.user._id,receiver:req.params.id
-                });
+                let notification;
+
+                if(place_id){
+                    notification = await NotificationModel.create({
+                        title, message, sender: req.user._id,receiver:req.params.id,place_id
+                    });
+                }else {
+                    notification = await NotificationModel.create({
+                        title, message, sender: req.user._id,receiver:req.params.id
+                    });
+                }
+
+                console.log('notification ',notification);
 
                 return res.status(200).json({ success: true, msg: 'Adding a new notification successfully', notification });
 

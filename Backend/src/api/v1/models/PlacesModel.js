@@ -41,7 +41,9 @@ const PlacesSchema = new mongoose.Schema({
     }],
 
     avg_review : Number,
-    noOfTimeBooking :{ type:Number,default:0}
+    noOfTimeBooking :{ type:Number,default:0},
+    farFromMetro : String,
+    keywords : Array
     // status : {type: Boolean, required: true, default:false},
 
 }, { timestamps: true })

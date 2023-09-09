@@ -23,13 +23,13 @@ function BooksControllers() {
                 //Finding the places we match the condition
                 let places = await PlacesModel.find(queryObject);
 
+                // console.log('finding places with query terms, ',places);
+
                 //Implment the sorting functionality
                 if (sort) {
                     let sortfix = sort.replace(',', ' ');
                     places = await places.sort(sortfix)
                 }
-
-
 
                 //Implement paging and limit functionality
                 let page = Number(req.query.page) || 1;
@@ -48,7 +48,7 @@ function BooksControllers() {
 
                 // console.log("show the places ", data, places);
 
-                return res.status(200).json({ success: true, msg: "Fetch all the places successfully", data });
+                return res.status(200).json({ success: true, msg: "Fetch all the places successfully", Length:data.length,data });
 
             } catch (error) { return res.status(500).json({ success: false, msg: error.message }); }
         },
@@ -166,14 +166,18 @@ function BooksControllers() {
         async successRequest(req, res) {
             try {
                 //--------------- Find the place according to the id
-                let book = await BooksModel.findOne({ place_id: req.params.id});
+                let book = await BooksModel.findOne({ place_id: req.params.place_id});
+               
 
                 if (!book) return res.status(404).json({ success: false, msg: "Can't find the booked place, please check again" });
 
+                
                 book.status = "success";
                 await book.save();
 
-                return res.status(200).json({ success: true, msg: 'Requesting of place for booking is successed' });
+                console.log('successing request of teh booking ',book);
+
+                return res.status(200).json({ success: true, msg: 'Requesting of place for booking is successed' ,book});
 
                 //After this send request the user;
 
@@ -184,14 +188,16 @@ function BooksControllers() {
         async cancelRequest(req, res) {
             try {
                 //--------------- Find the place according to the id
-                let book = await BooksModel.findOne({ place_id: req.params.id});
+                let book = await BooksModel.findOne({ place_id: req.params.place_id});
 
                 if (!book) return res.status(404).json({ success: false, msg: "Can't find the booked place, please check again" });
 
                 book.status = "cancel";
                 await book.save();
 
-                return res.status(200).json({ success: true, msg: 'Cancelling of the clients request successfully' });
+                console.log('cancel the request ',book);
+
+                return res.status(200).json({ success: true, msg: 'Cancelling of the clients request' ,book});
 
                 //After this send request the user who is requesting for booking;
 

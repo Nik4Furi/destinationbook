@@ -1,20 +1,57 @@
 import React, { useState } from 'react';
 
+import { useSelector } from 'react-redux';
+
+import {toast} from 'react-toastify'
+
+import sendNotification from '../apis/NotificationsApi'
+
+import Loading from '../components/Loading'
+
 const ContactUs = () => {
+  //----------- Admin details where we send the notification for conatct us
+  const  adminID = process.env.REACT_APP_ADMIN_ID,adminEmail = process.env.REACT_APP_ADMIN_EMAIL;
+
+  const user = useSelector(state => state.users.user);
+
   const [formData, setFormData] = useState({
     name: '',
     contact: '', // email or phone
     concern: '',
   });
+  const [loading,setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     // You can handle form submission here, such as sending data to the server
+
+    console.log(formData);
+    setLoading(true);
+
+    //--------- Now send the msg to admin for contact
+    const msg = {
+      title: `${user.name} Is Want To Contact With US`,
+      message: `${formData.contact} is write the concern, please read out ${formData.concern}`,
+      sender: user._id,
+      receiver: adminID
+    };
+
+    try {
+    await sendNotification(msg,adminID);
+      
+    } catch (error) {
+      console.log(error.message);
+      toast.error(error.message);
+    }
+
+    setLoading(false);
+    setFormData({name:'',concern:'',contact:''});
+
   };
 
   return (
@@ -59,12 +96,12 @@ const ContactUs = () => {
           ></textarea>
         </div>
         <div className="mb-4">
-          <button
+       { loading ? <Loading/>
+       :
+         <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
-          >
-            Submit
-          </button>
+            className="w-full btn-primary py-2 rounded-md focus:outline-none"
+          > Send Details </button>}
         </div>
       </form>
     </div>

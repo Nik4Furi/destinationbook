@@ -7,9 +7,11 @@ const NotificationSchema = new mongoose.Schema({
 
     message: { type: String, required: true, minlength: [5, "Title must be 5 char long "]},
 
-    sender: { type: mongoose.Schema.Types.ObjectId,ref:'User'},
+    sender: { type: mongoose.Schema.Types.ObjectId,ref:'User'}, 
 
     receiver: { type: mongoose.Schema.Types.ObjectId,ref:'User'},
+
+    place_id: { type: mongoose.Schema.Types.ObjectId,ref:'Place'},
 
     read : { type:Boolean, default:false },
 

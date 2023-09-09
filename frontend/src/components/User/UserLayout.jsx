@@ -11,23 +11,9 @@ import Loading from '../Loading'
 const UserLayout = ({ children }) => {
 //   const navigate = useNavigate();
 
-//   const user = useSelector(state => state.users.user);
+  const user = useSelector(state => state.users.user);
 
   const tabs = [['Dashboard', '/userDashboard'], ['Booked Places', '/user/booked'], ['Notifications', '/notifications']];
-//   const [loading, setLoading] = useState(false);
-
-
-//   useEffect(() => {
-
-//     setLoading(true);
-
-//     if (user.role === 'admin') {
-//       navigate('/admin')
-//     }
-
-//     setLoading(false);
-
-//   }, [])
 
   return (
     <>
@@ -38,7 +24,7 @@ const UserLayout = ({ children }) => {
 
           {/* Navbar section of admin to show the navigation only on admin pages  */}
 
-          <UserAdminNavbar name={'hello'} tabs={tabs} />
+          <UserAdminNavbar name={user.name} tabs={tabs} />
 
           <hr />
 

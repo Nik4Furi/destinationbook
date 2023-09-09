@@ -57,12 +57,12 @@ function PlacesControllers() {
         async add(req, res) {
             try {
                 //--------- Req.body content
-                const { name, description, capacity, price, booking_slots, address, available,location } = req.body;
+                const { name, description, capacity, price, booking_slots, address, available,location,farFromMetro,keywords } = req.body;
 
-                console.log('req.body ',req.body)
+                // console.log('req.body ',req.body)
 
                 //Requring all the specific fields
-                if (!name || !description || !capacity || !price || !booking_slots || !address || !location) { return res.status(404).json({ success: false, msg: "All fields are required" }) };
+                if (!name || !description || !capacity || !price || !booking_slots || !address || !location || !farFromMetro) { return res.status(404).json({ success: false, msg: "All fields are required" }) };
 
                 if (capacity < 0)
                     return res.status(404).json({ success: false, msg: "Capacity can't be negative " })
@@ -81,12 +81,13 @@ function PlacesControllers() {
                 const myCloud = await cloudinary.v2.uploader.upload(fileUri.content);
 
                 const totalPrice = Number(Number(capacity) * Number(price));
+                const FarFromMetroPlace = farFromMetro+' km';
 
 
                 const place = await PlacesModel.create({
                     name, description, price, address, capacity, sponser_id: req.user._id,location, booking_slots, available, picture: {
                         public_id: myCloud.public_id, url: myCloud.secure_url
-                    },totalPrice
+                    },totalPrice,farFromMetro:FarFromMetroPlace,keywords
                 })
 
                 return res.status(200).json({ success: true, msg: 'Adding a new place successfully ', place });
@@ -100,7 +101,7 @@ function PlacesControllers() {
             try {
 
                 //--------- Req.body content
-                const { name, description, capacity, price, booking_slots, address, available } = req.body;
+                const { name, description, capacity, price, booking_slots, address, available,keywords } = req.body;
 
                 //--------------- Find the place according to the id
                 let place = await PlacesModel.findOne({ sponser_id: req.user._id, _id: req.params.id });
@@ -117,6 +118,7 @@ function PlacesControllers() {
                 if (address) place.address = address;
                 if (booking_slots) place.booking_slots = booking_slots;
                 if (available) place.available = available;
+                if (keywords) place.keywords = keywords;
 
                 await place.save();
 

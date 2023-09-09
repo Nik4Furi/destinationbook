@@ -49,6 +49,10 @@ if (process.env.VERSION == 'v1') {
     const NotificationRoutes = require('./src/api/v1/routers/NotificationRoutes') //Connect your routes here
     app.use('/api/v1/notification', NotificationRoutes) //Can define path or respose of your apis path
 
+    //Blogs Routes
+    const BlogsRoutes = require('./src/api/v1/routers/BlogsRoutes') //Connect your routes here
+    app.use('/api/v1/blogs', BlogsRoutes) //Can define path or respose of your apis path
+
     //Admin Routes
     const AdminRoutes = require('./src/api/v1/routers/AdminRoutes') //Connect your routes here
     app.use('/api/v1/admin', AdminRoutes) //Can define path or respose of your apis path

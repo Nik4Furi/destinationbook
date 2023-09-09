@@ -122,7 +122,7 @@ const Table = ({ heading, para, col1, col2, col3 }) => {
               }
               {
                 places && places.map((item, index) => (
-                  <tr key={index}>
+                  <tr data-aos="zoom-in" key={index}>
                     <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-300">
                       {item.name}
                     </td>

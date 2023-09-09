@@ -2,16 +2,68 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ----------------- Configuring Global Css Elements ----------------X */
-:root{
+/* ---------------- Fonts Stylling ----------------X */
+@import url('https://fonts.googleapis.com/css2?family=Philosopher:ital,wght@0,400;0,700;1,400&family=Roboto:wght@300&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Philosopher:ital,wght@0,400;0,700;1,400&family=Poppins:wght@200;300&family=Roboto:wght@300&display=swap'); */
 
-    --main-btn-primary: salmon !important;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    /* font-family: 'Poppins', sans-serif; */
+    /* font-family: 'Philosopher', sans-serif; */
 }
 
-.btn-primary{
+
+/* ----------------- Configuring Global Css Elements ----------------X */
+:root {
+
+    /* Buttons Specific Stuff  */
+    --main-btn-primary: rgb(236, 73, 55) !important;
+    --main-btn-primary-hover: rgb(176, 34, 19) !important;
+
+    --main-btn-secondary: rgb(98, 98, 234) !important;
+    --main-btn-secondary-hover: rgb(63, 63, 204) !important;
+
+    /* Fonts Specific Stuff  */
+    --main-fs-primary: 'Philosopher', sans-serif;
+    --main-fs-secondary: 'Roboto', sans-serif;
+}
+/* ---------- Button Contianer  */
+.btn-primary {
     background: var(--main-btn-primary);
     color: white;
+    font-family: var(--main-fs-primary);
+    font-weight: bold;
 }
+.btn-primary:hover,.btn-primary:focus{
+    background: var(--main-btn-primary-hover);
+}
+
+.btn-secondary {
+    background: var(--main-btn-secondary);
+    color: white;
+    font-family: var(--main-fs-primary);
+}
+.btn-secondary:hover,.btn-secondary:focus{
+    background: var(--main-btn-secondary-hover);
+}
+
+/* --------------- Typography Container ------------ */
+.text-highlight{
+    font-family: var(--main-fs-primary);
+    font-weight: bold;
+    color: salmon;
+}
+.fs-primary{ /* Used for heading, subheading and highlight something */
+    font-family: var(--main-fs-primary);
+    font-weight: bold;
+}
+.fs-secondary{ /* Used for paragraphs */
+    font-family: var(--main-fs-secondary);
+}
+
 /* Define the button styles */
 .button {
     background-image: linear-gradient(to right, rgb(215, 112, 215), rgb(149, 149, 217));
@@ -21,34 +73,69 @@
     border-radius: 5px;
     cursor: pointer;
     transition: color 0.3s ease;
-    /* Add a smooth color transition on hover */ 
+    /* Add a smooth color transition on hover */
 }
-.button:hover{
+
+.button:hover {
     /* background-image: linear-gradient(to right, rgb(215, 112, 215), rgb(149, 149, 217)); */
     color: rgb(239, 230, 230);
 }
 
 /* Animating the sponser section  */
-.animate-slide{
-    animation: slide infinite 13s  linear;
-   
+.animate-slide {
+    animation: slide infinite 13s linear;
+
     /* background: red !important; */
     /* width: 100% !important;
     height: 100% !important; */
 }
 
 @keyframes slide {
-    0%{
+    0% {
         transform: translateX(100%);
     }
-    100%{
+
+    100% {
         transform: translateX(-100%);
     }
 }
 
 /* Backgroud of home header  */
-.bg-video{
+.bg-video {
     width: 100%;
     background: url('./assets/bg.mp4') center center-cover no-repeat;
     height: 234px;
+}
+
+/* ------------- Service Specific Stuff --------------X */
+/* Animate the services cards  */
+.animate-service:hover{
+    animation: animate-service-card 0.5s  linear  ;
+    transition: ease-in-out 0.5s all;
+}
+
+@keyframes animate-service-card{
+    0%{
+        transform: translateY(13px);
+    }
+    100%{
+        transform: translateY(0px);
+    }
+}
+
+/* --------- Home Specific Stuff --------X */
+/* header of the home  */
+.bg-img {
+    position: relative;
+    width: 100%;
+    height: 288px;
+}
+.bg-img::before{
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 100%;
+    background: url('./assets/bg.webp') center center/cover no-repeat;
+    top: 0%;
+    left: 0%;
 }

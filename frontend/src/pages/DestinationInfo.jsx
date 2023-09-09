@@ -45,9 +45,9 @@ const DestinationInfo = () => {
                 :
                 <div>
                     {/* Section to give it the info regarding to the specific place  */}
-                    <section id="DestinationInfo">
-                        <div className="container mx-auto my-2">
-                            <div className="grid grid-cols-2 grid-gap-4">
+                    <section id="DestinationInfo" style={{minHeight:'80vh'}}>
+                        <div className="md:container mx-auto my-2 w-1/2">
+                            <div className="grid md:grid-cols-2 gap-4">
 
                                 {/* Images stuff to show images regarding to the destination  */}
                                 {
@@ -55,16 +55,17 @@ const DestinationInfo = () => {
                              (
                                 <>
                                 <div>
-                                    <img src={place.picture.url} alt={place.name} className='w-2/3 rounded-md mx-auto' />
+                                    <img src={place.picture.url} alt={place.name} className='md:w-2/3 rounded-md mx-3 my-3' />
                                 </div>
 
-                                <div className="flex mx-2 my-3 flex-col">
+                                <div className="flex mx-2 my-3 flex-col w-full md:w-0">
                                     <h3 className="text-xl font-bold my-1">{place.name}</h3>
                                     <p className='my-1'>{place.descripiton}</p>
                                     <p className='my-1'>Capacity: <strong>{place.capacity}</strong></p>
-                                    <p className='my-1'>Price of one seat: <strong>{place.price}</strong></p>
+                                    <p className='my-1'>Price of one seat: <strong> <span className='text-green-700 '>&#x20B9;</span>{place.price}</strong></p>
+                                    <p className='my-1'>Far From Metro/Station/Subways: <strong>{place.farFromMetro}</strong></p>
 
-                                    <Link to={`/booknow/${place._id}`}><button className=" bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Book Now</button></Link>
+                                    <Link to={`/booknow/${place._id}`}><button className=" btn-primary py-2 px-4 rounded-md focus:outline-none ">Book Now</button></Link>
                                 </div>
                                 </>)
 }
@@ -74,7 +75,7 @@ const DestinationInfo = () => {
 
 
                     {/* Similiarly places to watch it, I will make changes for easy implmentations  */}
-                    <section id="SimiliaryPlaces" className='container mx-auto my-4'>
+                    {/* <section id="SimiliaryPlaces" className='container mx-auto my-4'>
                         <h1 className="text-3xl font-bold my-3">Similiar places</h1>
 
                         <div className="container mx-auto">
@@ -85,7 +86,7 @@ const DestinationInfo = () => {
 
                             </div>
                         </div>
-                    </section>
+                    </section> */}
                 </div>
             }
         </>

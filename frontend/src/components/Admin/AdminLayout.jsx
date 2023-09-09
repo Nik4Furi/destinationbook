@@ -42,7 +42,7 @@ const AdminLayout = ({ children }) => {
 
             {/* Navbar section of admin to show the navigation only on admin pages  */}
 
-            <UserAdminNavbar name={'hello'} tabs={tabs} />
+            <UserAdminNavbar name={user.name} tabs={tabs} />
 
             <hr />
 

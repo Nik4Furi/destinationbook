@@ -40,12 +40,14 @@ const SponserLayout = ({ children }) => {
 
           {/* Navbar section of admin to show the navigation only on admin pages  */}
 
-          <UserAdminNavbar name={'hello'} tabs={tabs} />
+          <UserAdminNavbar name={user.name} tabs={tabs} />
 
           <hr />
 
           {/* Section of the tables to showing all the stuffs of Admin related to the page  */}
+          <div className="p-3">
           {children}
+          </div>
         </div>
       </section>
     </>

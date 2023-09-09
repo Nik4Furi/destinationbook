@@ -113,14 +113,14 @@ navigate(-1);
                 <div className="mb-4">
                     {loading ? <button
 
-                        className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+                        className="w-full py-2 rounded-md btn-primary focus:outline-none "
                     >
                         <Loading />
                     </button>
                         :
                         <button
 
-                            className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+                            className="w-full py-2 rounded-md btn-primary focus:outline-none "
                         >
                             Login
                         </button>}
