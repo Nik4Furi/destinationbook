@@ -22,7 +22,8 @@ cloudinary.v2.config({
     cloud_name: process.env.CLOUDINARY_NAME || CLOUDINARY_NAME,
     api_key: process.env.CLOUDINARY_API_KEY || CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET || CLOUDINARY_API_SECRET
-})
+});
+
 
 //--------------- Home call
 app.get('/', (req, res) => {
@@ -57,7 +58,12 @@ if (process.env.VERSION == 'v1') {
     const AdminRoutes = require('./src/api/v1/routers/AdminRoutes') //Connect your routes here
     app.use('/api/v1/admin', AdminRoutes) //Can define path or respose of your apis path
 
+    //Payment Routes
+    const PaymentRoutes = require('./src/api/v1/routers/PaymentRoutes') //Connect your routes here
+    app.use('/api/v1/payment', PaymentRoutes) //Can define path or respose of your apis path
+
 }
+
 
 const Server = process.env.SERVER || SERVER;
 const Port = process.env.PORT || PORT;

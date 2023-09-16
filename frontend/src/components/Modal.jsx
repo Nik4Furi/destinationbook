@@ -6,7 +6,7 @@ const Modal = ({ isOpen, onClose, children }) => {
     const dispatch = useDispatch();
     const [notification,setNotification] = useState();
 
- 
+  
 
   //----------- When click on the model show all the un read notifications
   const unReadNotifications = async()=>{
@@ -38,15 +38,26 @@ const Modal = ({ isOpen, onClose, children }) => {
   if (!isOpen) {return null};
 
   return (
-    <div data-aos="zoom-in" className="fixed inset-0 flex items-center justify-center z-50" >
-      <div className="fixed inset-0 bg-black opacity-50" ></div>
-      <div className="bg-white w-2/3 p-4 rounded-lg z-50 overflow-scroll relative" style={{maxHeight : "569px"}}>
-        {children}
-        <button onClick={onClose} className="absolute  mt-4 bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600" style={{top:'-6%'}}>
-          Close
-        </button>
-      </div>
+    // <div data-aos="zoom-in" className="fixed bg-gray-500 inset-0 flex items-center justify-center z-[100]" >
+    //   <div className="fixed inset-0 bg-gray-200 opacity-10" ></div>
+    //   {/* <div className="bg-white w-2/3 p-4 rounded-lg z-50 overflow-scroll relative"> */}
+    //   <div className="w-2/3 p-4 rounded-lg z-50 overflow-scroll relative" style={{maxHeight : "569px"}}>
+    //     {/* <div className="bg-red-200"></div> */}
+    //     {children}
+    //     <button onClick={() =>onClose()} className="absolute  mt-4 bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600" style={{top:'-6%'}}>
+    //       Close
+    //     </button>
+    //   </div>
+    // </div>
+    <div className="fixed inset-0 flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-black opacity-50"></div>
+    <div className="bg-white p-4 rounded-lg z-50">
+      {children}
+      <button onClick={onClose} className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+        Close
+      </button>
     </div>
+  </div>
   );
 };
 

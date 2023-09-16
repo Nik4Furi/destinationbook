@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 //Images Stuff
 import mail from '../../assets/Footer/mail.png'
-import linkedin from '../../assets/Footer/linkedin.png'
+import linkedin from '../../assets/Footer/linkedin-2.png'
 import facebook from '../../assets/Footer/facebook.png'
 import call from '../../assets/Footer/call.png'
 
@@ -47,13 +47,13 @@ function Footer() {
           </div>
 
           {/* Fourth Column */}
-          <div className="my-4 mx-2  md:mb-0 w-1/2">
+          <div className="my-4 mx-2 md:mb-0 w-1/2">
             <h3 className="text-lg font-semibold mb-2 fs-primary">Contact Us</h3>
-            <ul className="list-none">
-              <li className="mb-1"><a href='tel:+91 23930203'><img src={call} alt="Call Now" style={{ width: "23px" }} /></a></li>
-              <li className="mb-1"><a href="mailto:admin23@gmail.com"> <img src={mail} alt="Mail US" style={{ width: "23px" }} /></a></li>
-              <li className="mb-1"> <a href="http://linkedin.com/in/officelelo" target="linkedin" rel="noopener noreferrer" ><img src={linkedin} alt="Call Now" style={{ width: "33px" }} /></a></li>
-              <li className="mb-1"><a href="http://facebook.com/officelelo" target="facebook" rel="noopener noreferrer" ><img src={facebook} alt="Facebook" style={{ width: "26px" }} /></a></li>
+            <ul className="list-none text-center">
+              <li className="mb-2"><a href='tel:+91 23930203'><img src={call} alt="Call Now" style={{ width: "23px" }} /></a></li>
+              <li className="mb-2"><a href="mailto:admin23@gmail.com"> <img src={mail} alt="Mail US" style={{ width: "22px" }} /></a></li>
+              <li className="mb-2"> <a href="http://linkedin.com/in/officelelo" target="linkedin" rel="noopener noreferrer" ><img src={linkedin} alt="Call Now" style={{ width: "28px" }} /></a></li>
+              <li className="mb-2"><a href="http://facebook.com/officelelo" target="facebook" rel="noopener noreferrer" ><img src={facebook} alt="Facebook" style={{ width: "28px" }} /></a></li>
           </ul>
         </div>
       </div>

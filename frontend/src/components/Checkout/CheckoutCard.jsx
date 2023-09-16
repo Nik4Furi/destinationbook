@@ -17,9 +17,9 @@ const CheckoutCard = ({ name, address, handleCheckout,totalPrice,status }) => {
       </div>
 {
   // status === 'pending' ?
-  // <button onClick={() => handleCheckout()} disabled className='mx-14  w-1/2 my-5 px-4 py-2 rounded-md focus:outline-none btn-primary'>Checkout</button>
+  <button onClick={() => handleCheckout()} className='mx-14  w-1/2 my-5 px-4 py-2 rounded-md focus:outline-none btn-primary'>Checkout</button>
   // :
-    <Link to={'/paymentSuccess'}>  <button onClick={() => handleCheckout()} className='mx-14  w-1/2 my-5 px-4 py-2 rounded-md focus:outline-none btn-primary '>Checkout</button></Link>
+  //   <Link to={'/paymentSuccess'}>  <button onClick={() => handleCheckout()} className='mx-14  w-1/2 my-5 px-4 py-2 rounded-md focus:outline-none btn-primary '>Checkout</button></Link>
 }
       
     </div>

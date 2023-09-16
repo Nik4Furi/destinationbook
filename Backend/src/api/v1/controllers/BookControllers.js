@@ -93,6 +93,18 @@ function BooksControllers() {
             } catch (error) { return res.status(500).json({ success: false, msg: error.message }); }
         },
 
+         //Make empty the booking, using DELETE '/api/v1/book/empty'
+         async Empty(req, res) {
+            try {
+                const empty = await BooksModel.deleteMany({booked_by:req.user._id});
+
+                if(!empty) return res.status(409).json({success:false,msg:"Can't removing the details of booked place"});
+
+                return res.status(200).json({ success: true, msg: "Empty the booking document successfully"});
+
+            } catch (error) { return res.status(500).json({ success: false, msg: error.message }); }
+        },
+
 
         //Requesting to place book , using POST '/api/v1/book/makeRequest'
         async makeRequest(req, res) {

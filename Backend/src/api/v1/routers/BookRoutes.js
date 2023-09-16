@@ -13,6 +13,7 @@ Routers.get('/showDetails/:id',BooksControllers().showDetails); //Showing only o
 
 Routers.get('/fetchAllBooked',FetchUser,BooksControllers().FetchAllBooked); //Show the booked places, using GET '/api/v1/book/fetchAllBooked'
 Routers.delete('/removeBooked/:id',FetchUser,BooksControllers().removeBooked); //Removing the booked places, using DELETE '/api/v1/book/removeBooked/:id'
+Routers.delete('/empty',FetchUser,BooksControllers().Empty); //Empty the documents of users after payment successed, using DELETE '/api/v1/book/empty'
 
 Routers.post('/makeRequest/:place_id',FetchUser,BooksControllers().makeRequest); //Make a request by the user to book a place, using POST '/api/v1/book/makeRequest'
 

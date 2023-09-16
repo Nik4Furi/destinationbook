@@ -1,0 +1,110 @@
+ /* Set background image and blend mode */
+ .background-container {
+    background-image: url('../assets/Home/demo4.jpg'); /* Replace with your image URL */
+    background-size: cover;
+    background-blend-mode: darken;
+    height: 100vh; /* Adjust as needed */
+    position: relative;
+    background-color: #b5aba2;
+    mix-blend-mode: multiply;
+}
+
+/* Style for text overlay */
+.text-overlay {
+    position: absolute;
+    top: 10%;
+    left: 8%;
+    /* left: 28%; */
+    /* transform: translate(-50%, -50%); */
+    text-align: center;
+    color: white;
+    /* font-size: 24px; */
+}
+
+/* Backgroud clip to show the options to connect  */
+.bg-clip{
+    /* clip-path: polygon(14% 48%, 86% 47%, 100% 100%, 0 99%); */
+    /* clip-path: polygon(14% 0, 88% 0, 100% 100%, 0 100%); */
+    /* border-right: 2px solid red;
+    border-left: 2px solid red; */
+    border-top-right-radius: 50px 20px;
+   border-top-left-radius: 50px 23px;
+    /* clip-path: polygon(10% 0, 88% 0, 100% 100%, 0 99%); */
+    /* clip-path: polygon(13% 28%, 89% 28%, 100% 100%, 0 99%); */
+    /* clip-path: polygon(15% 61%, 86% 61%, 100% 100%, 0 99%); */
+}
+
+/* Tab active then show one underline at the end  */
+.tab-active{
+    position: relative;
+}
+.tab-active::after{
+    content: '';
+    position: absolute;
+    font-family: var(--main-fs-primary);
+    border: 1px solid salmon;
+    background: salmon;
+    border-radius: 9px;
+    top: -8%;
+    left: 3px;
+    width: 80%;
+    height: 3px;
+}
+
+
+
+  /* Typing animation to show the users what we want to say  */
+  .wrapper{
+    display: flex;
+    /* position: relative; */
+  }
+  .wrapper .static-txt{
+    color: #fff;
+    /* font-size: 60px;
+    font-weight: 400; */
+  }
+  .wrapper .dynamic-txts{
+    /* margin-left: 15px; */
+    height: 90px;
+    line-height: 90px;
+    overflow: hidden;
+  }
+  .dynamic-txts li{
+    list-style: none;
+    /* color: #FC6D6D; */
+    /* font-size: 60px;
+    font-weight: 500; */
+    position: relative;
+    top: 0;
+    animation: slide 12s steps(4) infinite;
+  }
+  @keyframes slide {
+    100%{
+      top: -360px;
+    }
+  }
+  .dynamic-txts li span{
+    position: relative;
+    margin: 5px 0;
+    line-height: 90px;
+  }
+  .dynamic-txts li span::after{
+    content: "";
+    position: absolute;
+top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: #f7e6d5;
+    border-left: 2px solid white;
+    animation: typing 3s steps(14) infinite;
+  }
+  @keyframes typing {
+    40%, 60%{
+      left: calc(100% + 30px);
+    }
+    100%{
+      left: 0;
+    }
+  }
+  

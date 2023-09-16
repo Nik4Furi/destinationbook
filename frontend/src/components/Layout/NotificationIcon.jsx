@@ -244,7 +244,7 @@ const NotificationIcon = () => {
   //   closeModal();
 
   return (
-    <>
+    <> 
       {/* Modal section to open the modal when click on notification icon  */}
       <Modal isOpen={isModalOpen} onClose={closeModal}  >
         {loading && <Loading />}
@@ -259,13 +259,13 @@ const NotificationIcon = () => {
               <div className='z-50 cursor-pointer my-2 mx-2' onClick={() => handleDeleteNotification(item._id)}><img src={deleteImg} alt="delete" style={{ width: "23px" }} /></div>
 
               {
-                users?.role === 'user' &&
+                users.role === 'user' &&
                 <div className="flex items-center justify-between">
                   <Link to="/checkout"><button className='mx-2 my-1 px-2 bg-green-500 text-white py-1 rounded-md hover:bg-green-600 focus:outline-none focus:bg-green-600'>Checkout</button></Link>
                 </div>
 
               }{
-                users?.role === 'sponser' &&
+                users.role === 'sponser' &&
                 <div className="flex items-center justify-between">
                   <button onClick={() => handleAcceptRequest(item._id,item?.place_id)} className='mx-2  my-1 px-2 bg-green-500 text-white py-1 rounded-md hover:bg-green-600 focus:outline-none focus:bg-green-600'>Accept</button>
                   <button onClick={() => handleRejectRequest(item._id,item?.place_id)} className='mx-2 my-1  px-2 bg-red-500 text-white py-1 rounded-md hover:bg-red-600 focus:outline-none focus:bg-red-600'>Reject</button>

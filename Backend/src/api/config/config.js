@@ -14,5 +14,9 @@ const CLOUDINARY_NAME = "<cloud name>"
 const CLOUDINARY_API_KEY = "<cloud api key>"
 const CLOUDINARY_API_SECRET = "<cloud api secret>"
 
+// Razorpay Payment Integration
+const RAZORPAY_KEY_ID = ""
+const RAZORPAY_SECRET_KEY = ""
+
 module.exports = { SERVER, PORT, VERSION, MONGO_URI, JWT_SECRET_KEY, CLOUDINARY_API_KEY, CLOUDINARY_NAME, CLOUDINARY_API_SECRET };
 

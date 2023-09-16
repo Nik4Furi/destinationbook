@@ -3,7 +3,7 @@ import React from 'react'
 const ServiceCard = ({img, title,description}) => {
     return (
         <>
-            <div className="cursor-pointer animate-service max-w-xs rounded overflow-hidden shadow-lg">
+            <div className="cursor-pointer animate-service max-w-xs rounded shadow-lg">
                 {/* <img src={imageSrc} alt={heading} className="w-full" /> */}
                 <div className="px-6 py-4">
                 <h2 className="text-center text-4xl">{img}</h2>

@@ -1,16 +1,19 @@
 import React, { useState } from 'react'
 
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 import { useSelector } from 'react-redux'
 
 //Component
 import NotificationIcon from './NotificationIcon';
 
+
 //Images
 import user from '../../assets/user.png'
 
 const Navbar = () => {
+    const location = useLocation();
+    console.log('location  pathname ',location.pathname);
 
     const users = useSelector(state => state.users);
 
@@ -25,7 +28,7 @@ const Navbar = () => {
         <>
             {/* <nav className="bg-gradient-to-r from-blue-700 to-purple-900 p-4"> */}
             {/* <nav className="p-4 bg-img" style={{height:'92px'}}> */}
-            <nav className="p-4 bg-black ">
+            <nav className="p-4 bg-black">
                 {/* <nav className="p-4 bg-transparent"> */}
                 <div className="container mx-auto md:flex  justify-center md:justify-between  items-center z-50">
                     <div className='flex items-center justify-between'>
@@ -75,19 +78,19 @@ const Navbar = () => {
                             <li className="text-white font-semibold hover:text-blue-100">
                                 {/* <Link to="/">Home</Link> */}
                             </li>
-                            <li className="text-white  font-semibold hover:text-purple-300">
+                            <li className={`text-white  font-semibold hover:text-purple-300 ${location.pathname === '/about' ? 'active' : ''} `}>
                                 <Link onClick={() => setMenuOpen(false)} to="/about">About</Link>
                             </li>
-                            <li className="text-white  font-semibold hover:text-purple-300">
+                            {/* <li className="text-white  font-semibold hover:text-purple-300">
                                 <Link onClick={() => setMenuOpen(false)} to="/">Spaces</Link>
-                            </li>
-                            <li className="text-white  font-semibold hover:text-purple-300">
+                            </li> */}
+                            <li className={`text-white  font-semibold hover:text-purple-300 ${location.pathname === '/checkout' ? 'active' : ''} `}>
                                 <Link onClick={() => setMenuOpen(false)} to="/checkout">Checkout</Link>
                             </li>
-                            <li className="text-white  font-semibold hover:text-purple-300">
+                            <li className={`text-white  font-semibold hover:text-purple-300 ${location.pathname === '/contact' ? 'active' : ''} `}>
                                 <Link onClick={() => setMenuOpen(false)} to="/contact">Contact Us</Link>
                             </li>
-                            <li className="text-white  font-semibold hover:text-purple-300">
+                            <li className="text-white  font-semibold hover:text-purple-300 ">
                                 <a onClick={() => setMenuOpen(false)} href="tel:+91 2903892090">+91 2903892090</a>
                             </li>
 

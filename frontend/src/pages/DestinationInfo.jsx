@@ -46,19 +46,19 @@ const DestinationInfo = () => {
                 <div>
                     {/* Section to give it the info regarding to the specific place  */}
                     <section id="DestinationInfo" style={{minHeight:'80vh'}}>
-                        <div className="md:container mx-auto my-2 w-1/2">
-                            <div className="grid md:grid-cols-2 gap-4">
+                        <div className="md:container mx-auto my-2">
+                            <div className="grid md:grid-cols-2 gap-2">
 
                                 {/* Images stuff to show images regarding to the destination  */}
                                 {
                                     place && 
                              (
                                 <>
-                                <div>
+                                <div className='col-span-1'>
                                     <img src={place.picture.url} alt={place.name} className='md:w-2/3 rounded-md mx-3 my-3' />
                                 </div>
 
-                                <div className="flex mx-2 my-3 flex-col w-full md:w-0">
+                                <div className="flex mx-2 my-3 flex-col col-span-4">
                                     <h3 className="text-xl font-bold my-1">{place.name}</h3>
                                     <p className='my-1'>{place.descripiton}</p>
                                     <p className='my-1'>Capacity: <strong>{place.capacity}</strong></p>

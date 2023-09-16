@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import { useDispatch, useSelector } from 'react-redux'
 
-import {toast} from 'react-toastify'
+import { toast } from 'react-toastify'
 
 import Loading from '../components/Loading'
 
@@ -26,20 +26,20 @@ const Checkout = () => {
 
   const token = localStorage.getItem('token');
 
-  const [bookingPlaces,setBookingPlaces] = useState([]); //to updating booking details by the users
+  const [bookingPlaces, setBookingPlaces] = useState([]); //to updating booking details by the users
 
   //-------------- Find the places which is booked by the users
-  const fetchAllBooked  = async()=>{
+  const fetchAllBooked = async () => {
 
     try {
-      const res = await fetch(`${process.env.REACT_APP_API}book/fetchAllBooked`,{
-        headers : {
-          'auth-token' : token
+      const res = await fetch(`${process.env.REACT_APP_API}book/fetchAllBooked`, {
+        headers: {
+          'auth-token': token
         }
       });
       const data = await res.json();
 
-      console.log('check data of booking ',data);
+      console.log('check data of booking ', data);
 
       dispatch(fetchBooking(data.places));
 
@@ -52,78 +52,129 @@ const Checkout = () => {
     }
   }
 
-  const [totalPrice,setTotalPrice] = useState(0) //To show the total Price
-  const [status,setStatus] = useState(''); //Show the status of the place
+  const [totalPrice, setTotalPrice] = useState(0) //To show the total Price
+  const [status, setStatus] = useState(''); //Show the status of the place
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchAllBooked(); //Fetch all booked places by this user
 
-  
-    //---------Finding the totalPrice 
-    let totalPrice = 0,pendingStatus=0;
 
-    bookingPlaces.forEach((item)=>{
-      console.log('status of the booking places ',item.status);
-      if(item.status === 'pending')
-        pendingStatus+=1;
-      else 
+    //---------Finding the totalPrice 
+    let totalPrice = 0, pendingStatus = 0;
+
+    bookingPlaces.forEach((item) => {
+      console.log('status of the booking places ', item.status);
+      if (item.status === 'pending')
+        pendingStatus += 1;
+      else
         totalPrice += item.totalPrice;
     });
-console.log(pendingStatus, 'no of pending status');
-    if(pendingStatus > 0)
+    console.log(pendingStatus, 'no of pending status');
+    if (pendingStatus > 0)
       setStatus('pending');
-    else 
+    else
       setStatus('success');
 
     setTotalPrice(totalPrice);
-  },[notifications,booking]);
+  }, [notifications, booking]);
 
-  console.log('booking places ',bookingPlaces);
+  console.log('booking places ', bookingPlaces);
 
   //----------- Function to checkout or say payment route to payment by the user
-  const handleCheckout = async()=>{
+  const handleCheckout = async () => {
     //--------- Finding the totalPrice to booked
-    let totalPrice = 0;
+    let amount = 0;
 
-    bookingPlaces.forEach((item)=>{
-      totalPrice += item.totalPrice;
+    bookingPlaces.forEach((item) => {
+      amount += item.totalPrice;
       console.log(item.totalPrice);
     });
 
-    console.log('price ',totalPrice);
+    console.log('---------------total price ', amount);
+    //-------- Payment route to creating order by the users--------------------
+    let data;
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API}payment/checkout`, {
+        method: 'POST',
+        headers: {
+          'Content-Type' : 'application/json',
+          'auth-token': token
+        },
+        body: JSON.stringify({amount})
+      })
+      data = await res.json();
+      console.log('order creation of the data ', data);
 
-    //-------- Payment route to payment by the users
+    } catch (error) {
+      console.log(error)
+      toast.error(error);
+    }
+
+    //----------- Creating the options to apply callback
+    // console.log('key id ',process.env.REACT_APP_RAZORPAY_KEY_ID);
+    try {
+      
+    
+    const options = {
+      "key": process.env.REACT_APP_RAZORPAY_KEY_ID, // Enter the Key ID generated from the Dashboard
+      "amount": totalPrice, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+      "currency": "INR",
+      "name": "officelelo",
+      "description": "Pay to book a place, and get enjoy",
+      // "image": "https://avatars.githubusercontent.com/u/91304976?v=4",
+      "order_id": data.order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+      "callback_url": `${process.env.REACT_APP_API}payment/paymentverification`,
+      "prefill": {
+        "name": user.name,
+        "email": user.email,
+        "contact": user.phone
+      },
+      "notes": {
+        "address": user?.address
+      },
+      "theme": {
+        "color": "#E55B38"
+      }
+    };
+    var razorPay = window.Razorpay(options);
+
+    razorPay.open();
+  } catch (error) {
+      console.log(error);
+      toast.error(error);
   }
 
-   //-------------- Function to remove the booking from the database
-   const handleRemoveBoooking = async(id)=>{
+  }
+
+  //-------------- Function to remove the booking from the database
+  const handleRemoveBoooking = async (id) => {
     console.log(id);
 
     //First we remove from the array
     const newBookings = bookingPlaces.filter(item => item._id !== id);
     setBookingPlaces(newBookings);
 
-   /* //---------- Filter out the notification where match the id of bookingPlace
-    console.log('id is removing ',id);
-    console.log('booking place details where id is match ',bookingPlaces.filter(item => item._id === id));
-
-    console.log('check details of the notifications ',notifications); */
+    /* //---------- Filter out the notification where match the id of bookingPlace
+     console.log('id is removing ',id);
+     console.log('booking place details where id is match ',bookingPlaces.filter(item => item._id === id));
+ 
+     console.log('check details of the notifications ',notifications); */
 
     //----- Call the api to remove this booked place
     try {
-      
-    const res = await fetch(`${process.env.REACT_APP_API}book/removeBooked/${id}`,{
-      method : 'DELETE',
-      headers : {
-        'auth-token' : token
-      }
-    })
-      const data = await res.json();
-      console.log('data ',data);
 
-      if(data.success === true)
+      const res = await fetch(`${process.env.REACT_APP_API}book/removeBooked/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'auth-token': token
+        }
+      })
+      const data = await res.json();
+      console.log('data ', data);
+
+      if (data.success === true)
         toast.success(data.msg);
-      else if(data.success === false)
+      else if (data.success === false)
         toast.error(data.msg);
 
     } catch (error) {
@@ -132,22 +183,22 @@ console.log(pendingStatus, 'no of pending status');
     }
   }
 
-   if(!bookingPlaces)
+  if (!bookingPlaces)
     return <Loading />
 
   return (
     <>
-      <section id="Checkout" style={{minHeight:"80vh"}}>
+      <section id="Checkout" style={{ minHeight: "80vh" }}>
         <div className="container mx-auto my-3">
 
-            <div className="grid md:grid-cols-4 gap-2 grid-cols-2">
+          <div className="flex md:flex-row items-center justify-between flex-col">
 
             {/* Destination card to give info about the place, what they book  */}
-            <div className="md:col-span-3 p-3 col-span-5"> 
+            <div className="p-3 w-2/3">
               {
-                bookingPlaces?.length===0  && <>
+                bookingPlaces?.length === 0 && <>
                   <h1 className="text-start text-highlight text-lg my-2 mx-auto ">No booking details is here to show you, book Now!</h1>
-                 <Link to="/"> <button className='mx-4 text-xl w-1/2 my-5 px-4  py-2 rounded-md btn-primary focus:outline-none '>Go Home</button></Link>
+                  <Link to="/"> <button className='mx-4 text-xl w-1/2 my-5 px-4  py-2 rounded-md btn-primary focus:outline-none '>Go Home</button></Link>
                 </>
               }
               {
@@ -159,10 +210,10 @@ console.log(pendingStatus, 'no of pending status');
             </div>
 
             {/* Checkout details to ensuring the billings  */}
-            <div className="col-span-2 mx-3 md:mx-0">{ user &&
-            <CheckoutCard name={user.name} address={user.address} handleCheckout={handleCheckout} status={status} />}</div>
+            <div className=" mx-3 md:mx-0">{user &&
+              <CheckoutCard name={user.name} address={user.address} handleCheckout={handleCheckout} status={status} />}</div>
 
-            </div>
+          </div>
         </div>
       </section>
     </>

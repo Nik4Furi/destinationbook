@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -6,7 +6,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 
-import { ToastContainer} from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import './App.css';
@@ -43,6 +43,7 @@ import EditDetails from "./pages/Sponser/EditDetails";
 import CheckDashboard from "./components/Layout/CheckDashboard";
 import UserDashboard from "./pages/User/UserDashboard";
 import UserLayout from "./components/User/UserLayout";
+import PaymentVerification from './pages/PaymentVerification';
 
 
 function App() {
@@ -66,13 +67,19 @@ function App() {
             <ContactUs />
           </Layout>} />
 
-          {/* Contact Us page  */}
+          {/* Payment Success page  */}
           <Route path="/paymentsuccess" element={<Layout>
             <ProtectedRoute>
-            <PaymentSuccess />
-            {/* <PaymentError /> */}
-             </ProtectedRoute>
-          </Layout>} />
+              <PaymentSuccess /></ProtectedRoute>
+          </Layout>
+          } />
+
+          {/* Payment Error page  */}
+          <Route path="/paymenterror" element={<Layout>
+            <ProtectedRoute>
+              <PaymentError /> </ProtectedRoute>
+          </Layout>
+          } />
 
           {/* Register Page  */}
           <Route path="/register" element={<Layout>
@@ -87,12 +94,12 @@ function App() {
           {/* Logout page  */}
           <Route path="/logout" element={<Layout>
             <ProtectedRoute>
-            <Logout /></ProtectedRoute>
+              <Logout /></ProtectedRoute>
           </Layout>} />
 
           {/* Login Page  */}
           <Route path="/about" element={<Layout>
-          <About />
+            <About />
           </Layout>} />
 
           {/* Destination Info Page  */}
@@ -103,27 +110,33 @@ function App() {
           {/*Book Now Page  */}
           <Route path="/booknow/:id" element={<Layout>
             <ProtectedRoute>
-            <BookNow /> </ProtectedRoute>
+              <BookNow /> </ProtectedRoute>
           </Layout>} />
 
           {/*Checkout  Page  */}
           <Route path="/checkout" element={<Layout>
             <ProtectedRoute>
-            <Checkout /> </ProtectedRoute>
+              <Checkout /> </ProtectedRoute>
           </Layout>} />
 
-{/* Checking the dashboard of the users  */}
-<Route path="/checkDashboard" element={<Layout>
+          {/*Payment Verfication  Page  */}
+          <Route path="/paymentverification" element={<Layout>
             <ProtectedRoute>
-            <CheckDashboard /> </ProtectedRoute>
+              <PaymentVerification /> </ProtectedRoute>
+          </Layout>} />
+
+          {/* Checking the dashboard of the users  */}
+          <Route path="/checkDashboard" element={<Layout>
+            <ProtectedRoute>
+              <CheckDashboard /> </ProtectedRoute>
           </Layout>} />
 
           {/* Users Pages  */}
-<Route path="/userDashboard" element={<Layout>
+          <Route path="/userDashboard" element={<Layout>
             <ProtectedRoute>
               <UserLayout >
-            <UserDashboard />
-            </UserLayout> </ProtectedRoute>
+                <UserDashboard />
+              </UserLayout> </ProtectedRoute>
           </Layout>} />
 
 
@@ -137,25 +150,25 @@ function App() {
           <Route path="/sponser" element={<Layout>
             <ProtectedRoute>
               <SponserLayout>
-            <SponserDashboard /></SponserLayout> </ProtectedRoute>
+                <SponserDashboard /></SponserLayout> </ProtectedRoute>
           </Layout>} />
 
           <Route path="/sponser/addplace" element={<Layout>
             <ProtectedRoute>
               <SponserLayout>
-            <AddPlace /></SponserLayout> </ProtectedRoute>
+                <AddPlace /></SponserLayout> </ProtectedRoute>
           </Layout>} />
 
           <Route path="/sponser/showplaces" element={<Layout>
             <ProtectedRoute>
               <SponserLayout>
-            <ShowPlaces /></SponserLayout> </ProtectedRoute>
+                <ShowPlaces /></SponserLayout> </ProtectedRoute>
           </Layout>} />
 
           <Route path="/sponser/editDetails/:id" element={<Layout>
             <ProtectedRoute>
               <SponserLayout>
-            <EditDetails /></SponserLayout> </ProtectedRoute>
+                <EditDetails /></SponserLayout> </ProtectedRoute>
           </Layout>} />
 
 
@@ -164,25 +177,25 @@ function App() {
           {/* Dashboard page  */}
           <Route path="/admin" element={<Layout>
             <ProtectedRoute>
-            <AdminLayout>
-              <Dashboard />
-            </AdminLayout> </ProtectedRoute>
+              <AdminLayout>
+                <Dashboard />
+              </AdminLayout> </ProtectedRoute>
           </Layout>} />
 
           {/* Places page  */}
           <Route path="/admin/places" element={<Layout>
             <ProtectedRoute>
-            <AdminLayout>
-              <Places />
-            </AdminLayout> </ProtectedRoute>
+              <AdminLayout>
+                <Places />
+              </AdminLayout> </ProtectedRoute>
           </Layout>} />
 
           {/* Users page */}
           <Route path="/admin/users" element={<Layout>
             <ProtectedRoute>
-            <AdminLayout>
-              <Users />
-            </AdminLayout> </ProtectedRoute>
+              <AdminLayout>
+                <Users />
+              </AdminLayout> </ProtectedRoute>
           </Layout>} />
 
           {/* Error 404 page */}
