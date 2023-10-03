@@ -18,7 +18,7 @@ const BookingSlice = createSlice({
 
         //Remove User
         removeBooking(state,action){
-            return state.filter(item => item._id !== action.payload)
+          state.filter(item => item._id !== action.payload)
         },
 
         //Empty The Booking

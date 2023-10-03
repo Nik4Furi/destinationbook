@@ -13,8 +13,9 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /* font-family: 'Roboto', sans-serif !important; */
-    font-family: 'Poppins', sans-serif ;
+    font-family: 'Roboto', sans-serif !important;
+    /* font-family: 'Poppins', sans-serif !important; */
+    /* font-family:"Avenir Black" !important; */
 /* font-family: 'Roboto', sans-serif ; */
     scroll-behavior: smooth;
     transition: all 0.2s ease-in-out;
@@ -27,28 +28,45 @@
 :root {
 
     /* Buttons Specific Stuff  */
-    --main-btn-primary: rgb(236, 73, 55) !important;
-    --main-btn-primary-hover: rgb(176, 34, 19) !important;
+    /* --main-btn-primary: #EC4937 !important;
+    --main-btn-primary: #961406 !important; */
+    /* --main-btn-primary: #3f1081 !important;
+    --main-btn-primary-hover: #21054a !important; */
+
+    --main-btn-primary: #FF0000 !important;
+    --main-btn-primary-hover: #d40303  !important;
 
     --main-btn-secondary: white!important;
     --main-btn-secondary-hover: rgb(236, 73, 55)  !important;
 
+    /* Backgrounds Colors  */
+    --main-bg-primary : #27005D;
+    --main-bg-secondary : #9400FF;
+    --main-bg-ternary : #AED2FF;
+    --main-bg-fourth : #E4F1FF;
+    /* --main-btn-primary: #EC4937 !important; */
+
+
     /* Fonts Specific Stuff  */
+    --main-fs-primary: 'Roboto', sans-serif;
     --main-fs-secondary: 'Poppins', sans-serif;
     /* --main-fs-primary: 'Philosopher', sans-serif; */
-    --main-fs-primary: 'Roboto', sans-serif;
 }
 /* ---------- Button Contianer  */
 .btn-primary {
-    padding: 4px 7px;
-    border: 1px solid black;   
-    border-radius: 12px; 
+    /* padding: 6px 12px; */
+    /* border: 1px solid black;    */
+    border-radius: 5px; 
     background: var(--main-btn-primary);
+    /* background-color: var(--main-bg-primary); */
     color: white;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
     /* font-family: 'Times New Roman', Times, serif; */
-    /* font-family: var(--main-fs-primary); */
+    font-family: var(--main-fs-primary);
     /* font-family: var(--main-fs-secondary); */
+    /* font-family: inherit;
+    font-feature-settings: inherit;
+    font-variation-settings: inherit; */
     font-weight: bold;
     cursor:pointer
 }
@@ -57,7 +75,7 @@
 }
 
 .btn-secondary {
-    padding: 4px 7px;
+    /* padding: 8px 16px; */
     border: 1px solid black;   
     border-radius: 12px; 
     background: var(--main-btn-secondary);
@@ -70,11 +88,28 @@
     color: white;
 }
 
+/* Backgrounds Colors Stuff  */
+.bg-primary{
+    background: var(--main-bg-primary);
+}
+.bg-secondary{
+    background: var(--main-bg-secondary);
+}
+.bg-ternary{
+    background: var(--main-bg-ternary);
+}
+.bg-fourth{
+    background: var(--main-bg-fourth);
+}
+
 /* --------------- Typography Container ------------ */
 .text-highlight,.active{
     font-family: var(--main-fs-primary);
     font-weight: bold;
     color: salmon;
+}
+.text-secondary{
+    color: var(--main-bg-primary);
 }
 .fs-primary{ /* Used for heading, subheading and highlight something */
     font-family: var(--main-fs-primary);
@@ -119,12 +154,7 @@
     }
 }
 
-/* Backgroud of home header  */
-.bg-video {
-    width: 100%;
-    background: url('./assets/bg.mp4') center center-cover no-repeat;
-    height: 234px;
-}
+
 
 /* ------------- Service Specific Stuff --------------X */
 /* Animate the services cards  */
@@ -163,6 +193,6 @@
 }
 
 
-.no-scroll{
+.noscroll{
     overflow: hidden;
 }

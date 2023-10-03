@@ -4,57 +4,70 @@ import { useParams } from 'react-router-dom';
 
 import { toast } from 'react-toastify'
 
-import Loading from '../../components/Loading'
+//Global Function
+import { Token } from '../../GloballyFunctions';
+
+//Component Stuff
+import MainLoader from '../../components/Layout/Loaders/MainLoader'
+import Loading from '../../components/Layout/Loaders/Loading'
 
 
 function EditDetails() {
 
-  const { id } = useParams();
-  const token = localStorage.getItem('token');
+  const { id } = useParams(); //id to validate the item
 
+  // State Specific Stuff
   const [place, setPlace] = useState("");
 
   const [formData, setFormData] = useState({
-    name: place?.name,
-    description: place?.description,
-    capacity: place?.capacity,
-    price: place?.price,
-    address: place?.address,
-    location: place?.location,
-    booking_slots: place?.booking_slots,
-    available: place?.available,
+    name:  ' ',
+    description:  ' ',
+    capacity:  ' ',
+    price:  ' ',
+    address:  ' ',
+    city:  ' ',
+    purpose:  ' ',
+    booking_slots:  ' ',
+    available:  ' ',
+    // name: place?.name || ' ',
+    // description: place?.description || ' ',
+    // capacity: place?.capacity || ' ',
+    // price: place?.price || ' ',
+    // address: place?.address || ' ',
+    // city: place?.city || ' ',
+    // purpose: place?.purpose || ' ',
+    // booking_slots: place?.booking_slots || ' ',
+    // available: place?.available || ' ',
   });
 
   //------------- Call the api to fetch details of the 
   const fetchDetails = async () => {
-    try {
 
-
-      //Call the api to fetch place by the id
+    try {  //Call the api to fetch place by the id
       const res = await fetch(`${process.env.REACT_APP_API}sponser/fetchDetails/${id}`, {
         headers: {
-          'auth-token': token
+          'auth-token': Token
         }
       });
+
       const data = await res.json();
-      console.log('data ', data);
 
       setPlace(data.places);
       let content = data.places;
 
-      setFormData({ name: content.name, description: content.description, capacity: content.capacity, price: content.price, booking_slots: content.booking_slots, available: content.available, address: content.address, location: content.location })
+      setFormData({ name: content.name, description: content.description, capacity: content.capacity, price: content.price, booking_slots: content.booking_slots, available: content.available, address: content.address, city: content.city,purpose:content.purpose })
+
     } catch (error) {
-      console.log(error.message);
-      toast.error(error.message);
+      // console.log(error);
+      toast.error(error);
     }
 
   }
+
+
   useEffect(() => {
     fetchDetails(); //fetch details of place
-
-    // if(!place)
-    //   return <Loading />
-  }, []);
+  },[]);
 
 
   //------------ Image specific stuff to store images
@@ -88,12 +101,12 @@ function EditDetails() {
       const res = await fetch(`${process.env.REACT_APP_API}sponser/updatePicture/${id}`, {
         method: 'PUT',
         headers: {
-          'auth-token': token
+          'auth-token': Token
         },
         body: form
       });
       const data = await res.json();
-      console.log('data is ', data);
+      // console.log('data is ', data);
 
       if (data.success === true) {
         toast.success(data.msg);
@@ -104,8 +117,8 @@ function EditDetails() {
       }
 
     } catch (error) {
-      console.log('error ', error);
-      toast.error(error.message);
+      // console.log('error ', error);
+      toast.error(error);
     }
     setLoading(false);
     setFile('');
@@ -152,12 +165,12 @@ function EditDetails() {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'auth-token': token
+          'auth-token': Token
         },
         body: JSON.stringify(formData)
       });
       const data = await res.json();
-      console.log('data is ', data);
+      // console.log('data is ', data);
 
       if (data.success === true) {
         toast.success(data.msg);
@@ -168,25 +181,24 @@ function EditDetails() {
       }
 
     } catch (error) {
-      console.log('error ', error);
-      toast.error(error.message);
+      // console.log('error ', error);
+      toast.error(error);
     }
     setLoading(false);
     
   };
 
-  if (!place) {
-    return <div><Loading /></div>;
-  }
+  if (!place)
+    return <MainLoader />
 
   return (
     <>
-      {!place && <Loading />}
+      {!place && <MainLoader />}
 
-      <div className="flex items-center w-full my-2 cursor-pointer">
+      <div className="flex w-full my-2 cursor-pointer flex-col md:flex-row">
 
         <div className="mb-4 mx-auto">
-          <img src={place.picture.url} alt={place.name} className="h-auto" style={{ maxWidth: "120px" }} />
+          <img src={place.picture.url} alt={place.name} className="min-w-[500px]"  />
 
           <div className="my-2">
             <input
@@ -200,11 +212,11 @@ function EditDetails() {
             />
           </div>
 
-          <div className="mt-4">
+          <div className="mt-4 ">
             
                 <button
                   onClick={() => handleUpload()}
-                  className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-full"
+                  className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 block mx-auto rounded-full"
                 >
                   Upload Image
                 </button>
@@ -212,7 +224,7 @@ function EditDetails() {
         </div>
 
         {/* Other details of the place here  */}
-        <div className="my-2 w-3/6">
+        <div className="my-2 md:w-3/6 w-full">
           <form onSubmit={handleSubmit}>
 
             <div className="mb-4">
@@ -284,17 +296,17 @@ function EditDetails() {
             </div>
 
             <div className="mb-4">
-              <label htmlFor="location" className="block text-sm font-medium">
-                Location
+              <label htmlFor="city" className="block text-sm font-medium">
+                city
               </label>
               <input
                 type="text"
-                id="location"
-                name="location"
-                value={formData.location}
+                id="city"
+                name="city"
+                value={formData.city}
                 onChange={handleInputChange}
                 required
-                placeholder={place.location}
+                placeholder={place.city}
                 className="border p-2 w-full"
               />
             </div>
@@ -355,7 +367,7 @@ function EditDetails() {
                   :
                   <button
                     type="submit"
-                    className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-full"
+                    className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-full block w-full"
                   > Update Details</button>
               }
             </div>

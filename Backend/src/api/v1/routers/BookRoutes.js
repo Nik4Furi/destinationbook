@@ -16,8 +16,6 @@ Routers.delete('/removeBooked/:id',FetchUser,BooksControllers().removeBooked); /
 Routers.delete('/empty',FetchUser,BooksControllers().Empty); //Empty the documents of users after payment successed, using DELETE '/api/v1/book/empty'
 
 Routers.post('/makeRequest/:place_id',FetchUser,BooksControllers().makeRequest); //Make a request by the user to book a place, using POST '/api/v1/book/makeRequest'
-
-Routers.put('/processedRequest/:id', FetchUser, SponserRole ,BooksControllers().processedRequest); //After requesting to processeding the place booking by the sponser '/api/v1/sponser/processedRequest'
 Routers.put('/successRequest/:place_id', FetchUser, SponserRole ,BooksControllers().successRequest); //After requesting to processeding the place booking by the sponser '/api/v1/sponser/processedRequest'
 Routers.put('/cancelRequest/:place_id', FetchUser, SponserRole ,BooksControllers().cancelRequest); //After requesting to processeding the place booking by the sponser '/api/v1/sponser/processedRequest'
 

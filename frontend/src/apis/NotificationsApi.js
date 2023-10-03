@@ -1,15 +1,14 @@
-const token = localStorage.getItem('token');
+import {Token} from '../GloballyFunctions'
 
 //------------ Function to send the notifications
 const sendNotification = async (msg,id) => {
     try {
-        const token = localStorage.getItem('token');
 
         const res = await fetch(`${process.env.REACT_APP_API}notification/add/${id}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'auth-token': token
+                // 'auth-token': Token
             },
             body: JSON.stringify(msg)
         });
@@ -24,12 +23,10 @@ const sendNotification = async (msg,id) => {
 //-------------------- Function to get all the notification of respective user
 export const getAllNotifications = async () => {
     try {
-        const token = localStorage.getItem('token');
-
         const res = await fetch(`${process.env.REACT_APP_API}notification/getAllNotifications`,{
             headers: {
                 'Content-Type': 'application/json',
-                'auth-token': token
+                'auth-token': Token
             }
         });
         const data = await res.json();
@@ -48,7 +45,7 @@ export const DeleteNotifications = async (id) => {
         const res  = await fetch(`${process.env.REACT_APP_API}notification/delete/${id}`,{
           method : 'DELETE',
           headers : {
-            'auth-token' : token
+            'auth-token' : Token
           }
         });
         const data = await res.json();

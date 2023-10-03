@@ -5,8 +5,7 @@ const BookingSlots = Object.freeze({
     MORNING: 'morning',
     AFTERNOON : 'afternoon',
     EVENING: 'evening',
-    NIGHT: 'night',
-    ANY : 'anytime'
+    NIGHT: 'night'
 })
 
 //Requesting type is 
@@ -15,6 +14,15 @@ const Requests = Object.freeze({
     PENDING: 'pending',
     CANCEL: 'cancel'
 })
+
+
+// Choosing Predefined purposes to define
+const Purposes = Object.freeze({
+    MEETING:'meeting room',
+    VIRTUALOFFICE: 'virtual office',
+    CONFERENCE: 'conference room',
+    INTERVIEWROOM: 'interview room'
+}) 
 
 //Create the shcema of our users
 const BooksSchema = new mongoose.Schema({
@@ -35,10 +43,10 @@ const BooksSchema = new mongoose.Schema({
 
     start_time : {type:String,default:Date.now},
 
-    end_time : String,
+    end_time : String,  
 
-    bookForWhat : String,
-
+    purpose : {type:String, enum:Purposes},
+    
     status : {type:String, enum:Requests,default:Requests.PENDING},
 
 }, { timestamps: true })

@@ -1,5 +1,5 @@
 import React from 'react'
-import StatsCard from '../../components/Admin/StatsCard'
+import StatsCard from '../../components/pages/Admin/StatsCard'
 
 const Dashboard = () => {
   return (

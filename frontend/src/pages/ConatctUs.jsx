@@ -7,56 +7,57 @@ import { useSelector } from 'react-redux';
 
 import { toast } from 'react-toastify'
 
+
+//APIs Stuff
 import sendNotification from '../apis/NotificationsApi'
 
-import Loading from '../components/Loading'
+//Components Stuff
+import Loading from '../components/Layout/Loaders/Loading'
+import WhatsappApi from '../components/Layout/WhatsappApi';
 
-// import Contact from '../assets/contact.jpg'
+// Assets Images Stuff
 import mail from '../assets/Footer/mail.png'
 import phone from '../assets/Footer/call.png'
 import contact_img from '../assets/contact.jpg'
+import Button from '../components/Layout/Form/Button';
 
 
 const ContactUs = () => {
+
   //----------- Admin details where we send the notification for conatct us
-  const adminID = process.env.REACT_APP_ADMIN_ID, adminEmail = process.env.REACT_APP_ADMIN_EMAIL;
+  const AdminID = process.env.REACT_APP_ADMIN_ID;
 
   const user = useSelector(state => state.users.user);
 
   const [formData, setFormData] = useState({
-    name: '',
-    contact: '', // email or phone
+    name: user?.name || '',
+    contact: user?.email || '', // email or phone
     concern: '',
   });
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) => {
-    // const { name, value } = e.target;
-    // setFormData({ ...formData, [name]: value });
-    setFormData({...formData,[e.target.name]:e.target.value})
-  };
+  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value })
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // You can handle form submission here, such as sending data to the server
 
-    console.log(formData);
+    // console.log(formData);
     setLoading(true);
 
     //--------- Now send the msg to admin for contact
     const msg = {
-      title: `${user.name} Is Want To Contact With US`,
-      message: `${formData.contact} is write the concern, please read out ${formData.concern}`,
-      sender: user._id,
-      receiver: adminID
+      title: `'${formData.name}' Is Want To Contact With US`,
+      message: `'${formData.contact}' is write the concern, please read out from here 👉 "${formData.concern}"`,
+      sender: user?._id || null,
+      receiver: AdminID
     };
 
     try {
-      await sendNotification(msg, adminID);
+      await sendNotification(msg, AdminID);
 
     } catch (error) {
-      console.log(error.message);
-      toast.error(error.message);
+      // console.log(error);
+      toast.error(error);
     }
 
     setLoading(false);
@@ -65,9 +66,6 @@ const ContactUs = () => {
   };
 
   return (
-    // <div className="container mx-auto p-4">
-
-    // </div>
     <>
 
       <section id="ContactUs">
@@ -84,30 +82,34 @@ const ContactUs = () => {
 
         </div> */}
 
-<div className="flex items-center bg-gray-800 text-white">
-      <div className="flex items-center justify-round">
-       <div className="container mx-2 my-4 py-10 px-10">
-        <div className="flex flex-col items-center">
-        <h1 className=" font-bold text-4xl text-highlight my-2">Get In Touch</h1>
-        <p className="text-lg my-1">Want to get in touch ? We'd love to hear from you. Here how you can react us...</p>
-      <a href="#ContactButton"> <button className="btn-secondary my-3">Contact US</button></a> 
-        </div>
-        </div>
+        <div className="flex items-center bg-gray-800 text-white">
 
-        <div className="rounded-full bg-blue-500 w-full h-full mx-10 flex items-center">
-          {/* You can replace the image with your actual profile image */}
-          <img
-            src={contact_img}
-            alt="Contact"
-            className="rounded-full w-full h-full object-cover"
-          />
+          <div className="flex items-center justify-round">
+
+            <div className="container mx-2 my-4 py-10 px-10">
+              <div className="flex flex-col items-center ">
+                <h1 className=" font-bold text-4xl text-highlight my-2">Get In Touch</h1>
+                <p className="text-lg my-1">Want to get in touch ? We'd love to hear from you. Here how you can react us...</p>
+                <a href="#ContactButton"> <Button title={'Contact US'} btntype='secondary' /> </a>
+              </div>
+            </div>
+
+            <div className="hidden md:block rounded-full bg-blue-500 w-full h-full mx-10">
+              {/* You can replace the image with your actual profile image */}
+              <img
+                src={contact_img}
+                alt="Contact"
+                className="rounded-full w-full h-full object-cover"
+              />
+            </div>
+
+          </div>
+          {/* Add other header content or actions on the right side */}
         </div>
-      </div>
-      {/* Add other header content or actions on the right side */}
-    </div>
 
         {/* Here is the contact us section with the form and directly mail if need  */}
-        <div className="flex items-center justify-between container my-3 mx-auto">
+        <div className="flex flex-col-reverse md:flex-row items-center justify-between container my-3 mx-auto">
+
           <div id='ContactButton' className='container my-3 mx-auto'>
             <h1 className="text-3xl font-semibold mb-4">Contact With Us</h1>
             <p className='my-2'>If you have any query , please feel free to contact with us, we will help to mesaure your concern seriously</p>
@@ -115,7 +117,7 @@ const ContactUs = () => {
             <form onSubmit={handleSubmit} className="max-w-md mx-auto">
 
               <div className="mb-4">
-                <label htmlFor="name" className="block text-gray-700">Name</label>
+                <label htmlFor="name" className="block text-gray-700">Name <span className="text-highlight">*</span></label>
                 <input
                   type="text"
                   id="name"
@@ -127,9 +129,9 @@ const ContactUs = () => {
                 />
               </div>
               <div className="mb-4">
-                <label htmlFor="contact" className="block text-gray-700">Email/Phone</label>
+                <label htmlFor="contact" className="block text-gray-700">Email <span className="text-highlight">*</span></label>
                 <input
-                  type="text"
+                  type="email"
                   id="contact"
                   name="contact"
                   value={formData.contact}
@@ -139,7 +141,7 @@ const ContactUs = () => {
                 />
               </div>
               <div className="mb-4">
-                <label htmlFor="concern" className="block text-gray-700">Concern</label>
+                <label htmlFor="concern" className="block text-gray-700">Concern <span className="text-highlight">*</span></label>
                 <textarea
                   id="concern"
                   name="concern"
@@ -150,15 +152,22 @@ const ContactUs = () => {
                   required
                 ></textarea>
               </div>
+
               <div className="mb-4">
-                {loading ? <Loading />
-                  :
-                  <button
+                {
+                  loading ? <Loading /> : <button
                     type="submit"
-                    className="w-full btn-primary py-2 rounded-md focus:outline-none"
-                  > Send Details </button>}
+                    className="w-full btn-secondary px-4 py-2 rounded-md focus:outline-none"
+                  >
+                    Send Now
+                  </button>
+
+                }
+
+
               </div>
             </form>
+
           </div>
 
           <div className='flex flex-col items-center p-2'>
@@ -174,9 +183,13 @@ const ContactUs = () => {
             </div>
 
           </div>
+
         </div>
 
       </section>
+
+      {/* Whatsapp api to add here to quick connect  */}
+      <WhatsappApi />
     </>
   );
 };

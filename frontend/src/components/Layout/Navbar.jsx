@@ -6,16 +6,16 @@ import { useSelector } from 'react-redux'
 
 //Component
 import NotificationIcon from './NotificationIcon';
-
+import Button from './Form/Button';
 
 //Images
 import user from '../../assets/user.png'
 
 const Navbar = () => {
-    const location = useLocation();
-    console.log('location  pathname ',location.pathname);
 
-    const users = useSelector(state => state.users);
+    const location = useLocation();
+
+    const users = useSelector(state => state.users.user); //State of the user
 
     //------- Create a hamberger to toggle navbar components
     const [menuOpen, setMenuOpen] = useState(false);
@@ -24,14 +24,17 @@ const Navbar = () => {
         setMenuOpen(!menuOpen);
     };
 
+    if(location.pathname ==='/')
+        return null;
+
     return (
         <>
-            {/* <nav className="bg-gradient-to-r from-blue-700 to-purple-900 p-4"> */}
-            {/* <nav className="p-4 bg-img" style={{height:'92px'}}> */}
             <nav className="p-4 bg-black">
-                {/* <nav className="p-4 bg-transparent"> */}
+
                 <div className="container mx-auto md:flex  justify-center md:justify-between  items-center z-50">
+
                     <div className='flex items-center justify-between'>
+
                     <Link onClick={() => setMenuOpen(false)} to={"/"}> <h2 className="text-center text-white text-xl font-semibold">OfficeLelo</h2></Link>
 
 
@@ -81,9 +84,9 @@ const Navbar = () => {
                             <li className={`text-white  font-semibold hover:text-purple-300 ${location.pathname === '/about' ? 'active' : ''} `}>
                                 <Link onClick={() => setMenuOpen(false)} to="/about">About</Link>
                             </li>
-                            {/* <li className="text-white  font-semibold hover:text-purple-300">
-                                <Link onClick={() => setMenuOpen(false)} to="/">Spaces</Link>
-                            </li> */}
+                            <li className="text-white  font-semibold hover:text-purple-300">
+                                <Link onClick={() => setMenuOpen(false)} to="/spaces">Spaces</Link>
+                            </li>
                             <li className={`text-white  font-semibold hover:text-purple-300 ${location.pathname === '/checkout' ? 'active' : ''} `}>
                                 <Link onClick={() => setMenuOpen(false)} to="/checkout">Checkout</Link>
                             </li>
@@ -98,7 +101,7 @@ const Navbar = () => {
 
 
                         {
-                            users.user ?
+                            users ?
                                 <div className='relative flex justify-center mx-auto items-center overflow-hidden my-2'>
                                     <Link to={"/checkDashboard"}>
                                         <div onClick={()=>setMenuOpen(false)} className='mx-4' style={{ border: "1px solid white", padding: '2px', borderRadius: "50%" }}> <img src={user} alt="user" style={{ width: "30px", padding: '0', margin: '0' }} /></div></Link>
@@ -106,9 +109,7 @@ const Navbar = () => {
                                 </div>
                                 :
                                 <div>
-                                    <Link to={"/login"} onClick={()=>setMenuOpen(false)}>  <button className="px-4 block mx-auto py-2 my-2 rounded-md btn-primary focus:outline-none ">SignIn</button></Link>
-                                    {/* <Link to={"/login"}>    <button className="px-4 btn-secondary py-2 rounded-md focus:outline-none">SignIn</button></Link> */}
-                                    {/* <Link to={"/login"}>    <button className="px-4 bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">SignIn</button></Link> */}
+                                    <Link to={"/login"} onClick={()=>setMenuOpen(false)}>  <div className="block mx-auto"><Button title={'SignIn'} /></div></Link>                                    
                                 </div>
                         }
                     </div>

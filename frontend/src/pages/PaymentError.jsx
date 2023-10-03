@@ -1,8 +1,10 @@
 import React from 'react';
 import {Link} from 'react-router-dom'
+
 import error from '../assets/paymenterror.jpg'
 
 const PaymentError = () => {
+  
   return (
     <div className="container mx-auto p-4 text-center" style={{minHeight:"80vh"}}>
       <div className="py-8">

@@ -1,4 +1,4 @@
-console.log("Welcome in destination book app");
+console.log("Welcome in officelelo app");
 
 const { SERVER, PORT, CLOUDINARY_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET } = require('./src/api/config/config'); //Configure global variables thats was work as an backup in less connection '.env'
 

@@ -7,10 +7,6 @@ const instance = new Razorpay({ //instance of the razorpay
     key_id: process.env.RAZORPAY_KEY_ID,
     key_secret: process.env.RAZORPAY_SECRET_KEY,
 });
-// const instance = new Razorpay({ //instance of the razorpay
-//     key_id:"rzp_test_aT9C3025prTaao",
-//     key_secret:"MHycmMniYRHB5rKS5cQWdOg3",
-//   });
 
 const crypto = require('crypto');
 const PaymentModel = require('../models/PaymentModel');
@@ -23,11 +19,11 @@ function PaymentControllers() {
         async Checkout(req, res) {
             try {
                 //get constraints from req.body
-                console.log('req.body ',req.body);
+                // console.log('req.body ', req.body);
 
                 const { amount } = req.body;
 
-                if(!amount) return res.status(409).json({success:false,msg:'Amount is not found, please checkout again'})
+                if (!amount) return res.status(409).json({ success: false, msg: 'Amount is not found, please checkout again' })
 
                 const options = {
                     amount: Number(amount) * 100,  // amount in the smallest currency unit
@@ -37,7 +33,7 @@ function PaymentControllers() {
 
                 const order = await instance.orders.create(options);
 
-                console.log('orders ', order);
+                // console.log('orders ', order);
 
                 return res.status(200).json({ success: true, msg: 'Creating a order successfully ', order })
 
@@ -57,7 +53,7 @@ function PaymentControllers() {
                 const expectedSignature = crypto.createHmac('sha256', process.env.RAZORPAY_SECRET_KEY).update(body.toString()).digest('hex');
 
                 const isMatch = razorpay_signature == expectedSignature;
-                
+
                 if (isMatch == false) {
                     res.redirect(`http://localhost:3000/paymenterror`);
 
@@ -66,7 +62,7 @@ function PaymentControllers() {
 
                 //----------- Save the payment data
                 const payment = await PaymentModel.create({
-                    razorpay_payment_id,razorpay_order_id,razorpay_signature
+                    razorpay_payment_id, razorpay_order_id, razorpay_signature
                 })
 
                 res.redirect(`http://localhost:3000/paymentverification?referenceid=${razorpay_payment_id}`);
@@ -74,9 +70,10 @@ function PaymentControllers() {
 
                 // return res.status(200).json({ success: true, msg: 'Payment is done successfully'});
 
-            } catch (error) { 
+            } catch (error) {
                 console.log(error);
-                return res.status(500).json({ success: false, msg: error }) }
+                return res.status(500).json({ success: false, msg: error })
+            }
         },
 
         // Try to check the reference id is valid
@@ -85,14 +82,16 @@ function PaymentControllers() {
                 //get constraints from req.body
                 const { referenceid } = req.body;
 
-                if(!referenceid) return res.status(409).json({success:false,msg:'Amount is not found, please checkout again'})
+                if (!referenceid) return res.status(409).json({ success: false, msg: 'Amount is not found, please checkout again' })
 
-               const isMatch = await PaymentModel.findOne({razorpay_payment_id : referenceid});
-               
-               if(isMatch == false)
-                return res.status(404).json({success:false,msg:'Your payment is invalid, now checkout again'})
+                const isMatch = await PaymentModel.findOne({ razorpay_payment_id: referenceid });
 
-                return res.status(200).json({ success: true, msg: 'Your Payment is successed '})
+                if (isMatch == false)
+                    return res.status(404).json({ success: false, msg: 'Your payment is invalid, now checkout again' })
+
+                 // if payment is successed then we can change the status of the booking details data 
+                    
+                return res.status(200).json({ success: true, msg: 'Your Payment is successed ' })
 
             } catch (error) { return res.status(500).json({ success: false, msg: error }) }
         },

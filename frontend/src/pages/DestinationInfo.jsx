@@ -2,19 +2,26 @@ import React, { useEffect, useState } from 'react'
 
 import { Link, useNavigate, useParams } from 'react-router-dom'
 
+import { useSelector } from 'react-redux'
+
 import { toast } from 'react-toastify'
 
-import dest from '../assets/dest-1.jpg'
-import DestinationCard from '../components/Home/DestinationCard'
-import Loading from '../components/Loading'
+//Compoents Stuff
+import DestinationCard from '../components/pages/Home/DestinationCard'
+import Loading from '../components/Layout/Loaders/Loading'
 
 const DestinationInfo = () => {
+    
     const { id } = useParams();
     const navigate = useNavigate();
 
-    // console.log('check id ',id);
+    const places = useSelector(state => state.places.places);
+    // console.log('show places ',places);
 
+    //States Specific Stuff
     const [place, setPlace] = useState();
+    const [similiarPlaces,setSimiliarPlaces] = useState([]);
+
     const [loading, setLoading] = useState(false);
 
     //Calling the api function to checking the id of the destination is exist and show according those details 
@@ -23,20 +30,30 @@ const DestinationInfo = () => {
         try {
             const res = await fetch(`${process.env.REACT_APP_API}book/showDetails/${id}`);
             const data = await res.json();
-            console.log('check places ', data);
+            // console.log('check places ', data);
+
             setPlace(data.place);
 
+            const city = data.place.location;
+            const purpose = data.place.purpose;
+
+            // To find the similiar places on the basis of city and purpose 
+            const similiarPlaces = places.filter(item => (item.city === city || item.purpose === purpose));
+            // console.log('similiar places ',similiarPlaces);
+
+            setSimiliarPlaces(similiarPlaces);
+
         } catch (error) {
-            console.log('error ', error.message);
-            toast.error(error.message);
+            // console.log('error ', error.message);
+            toast.error(error);
             navigate('/');
         }
         setLoading(false);
     }
 
+
     useEffect(() => {
         showDetails();
-        console.log('check place',place);
     }, [])
 
     return (
@@ -75,18 +92,24 @@ const DestinationInfo = () => {
 
 
                     {/* Similiarly places to watch it, I will make changes for easy implmentations  */}
-                    {/* <section id="SimiliaryPlaces" className='container mx-auto my-4'>
-                        <h1 className="text-3xl font-bold my-3">Similiar places</h1>
+                    <section id="SimiliaryPlaces" className='container mx-auto my-4'>
+                        <p className="text-sm my-1">See the similiar places , so get choice of your space 🚀</p>
+                        <h1 className="text-3xl font-bold my-3">Similiar Places</h1>
 
                         <div className="container mx-auto">
                             <div className="grid grid-cols-3 grid-gap-3">
-                                <DestinationCard img={dest} heading={"A lot of choices"} descripiton={"Choose to best space is fit on you"} />
-                                <DestinationCard img={dest} heading={"A lot of choices"} descripiton={"Choose to best space is fit on you"} />
-                                <DestinationCard img={dest} heading={"A lot of choices"} descripiton={"Choose to best space is fit on you"} />
+                                {
+                                    similiarPlaces && similiarPlaces.map(item => (
+
+                                        <DestinationCard link={`/booknow/${item._id}`} key={item._id} img={item.picture.url} heading={item.name} descripiton={item.descripiton} />
+                                    ))
+                                }
+                                {/* <DestinationCard img={dest} heading={"A lot of choices"} descripiton={"Choose to best space is fit on you"} />
+                                <DestinationCard img={dest} heading={"A lot of choices"} descripiton={"Choose to best space is fit on you"} /> */}
 
                             </div>
                         </div>
-                    </section> */}
+                    </section>
                 </div>
             }
         </>

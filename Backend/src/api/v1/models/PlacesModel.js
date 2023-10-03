@@ -5,9 +5,26 @@ const BookingSlots = Object.freeze({
     MORNING: 'morning',
     AFTERNOON : 'afternoon',
     EVENING: 'evening',
-    NIGHT: 'night',
-    ANY : 'anytime'
+    NIGHT: 'night'
 })
+
+// Alocating the cities or location details where we serve
+const Cities = Object.freeze({
+    NEWDELHI : 'new delhi',
+    MUMBAI: 'mumbai',
+    PUNE: 'pune',
+    KOLKATA: 'kolkata',
+    HYDRABAAD: 'hydrabaad',
+    BANGULURU: 'banguluru'
+});
+
+// Choosing Predefined purposes to define
+const Purposes = Object.freeze({
+    MEETING:'meeting room',
+    VIRTUALOFFICE: 'virtual office',
+    CONFERENCE: 'conference room',
+    INTERVIEWROOM: 'interview room'
+}) 
 
 //Create the shcema of our users
 const PlacesSchema = new mongoose.Schema({
@@ -18,7 +35,9 @@ const PlacesSchema = new mongoose.Schema({
 
     picture: { public_id: String, url: String },
 
-    location : String,
+    city : {type:String, enum:Cities},
+
+    purpose : {type:String, enum:Purposes},
 
     price: Number,
 

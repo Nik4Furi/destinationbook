@@ -13,7 +13,7 @@ function PlacesControllers() {
             try {
                 //-------- May be work as an searching also
                 let { name, capacity, address, price } = req.query;
-                console.log(req.query);
+                // console.log(req.query);
 
                 //Finding the places we match the condition
                 let places = await PlacesModel.find({sponser_id:req.user.id});
@@ -24,7 +24,7 @@ function PlacesControllers() {
                 //     ]
                 // }).where('available').equals(true);
 
-                console.log('check places ', places);
+                // console.log('check places ', places);
 
                 return res.status(200).json({ success: true, msg: 'fetching the places', length:places.length,places });
 
@@ -46,7 +46,7 @@ function PlacesControllers() {
                 //     ]
                 // }).where('available').equals(true);
 
-                console.log('check places ', places);
+                // console.log('check places ', places);
 
                 return res.status(200).json({ success: true, msg: 'fetching the places', places });
 
@@ -57,12 +57,18 @@ function PlacesControllers() {
         async add(req, res) {
             try {
                 //--------- Req.body content
-                const { name, description, capacity, price, booking_slots, address, available,location,farFromMetro,keywords } = req.body;
+                let { name, description,purpose, capacity, price, booking_slots, address, available,city,farFromMetro,keywords } = req.body;
+
 
                 // console.log('req.body ',req.body)
 
                 //Requring all the specific fields
-                if (!name || !description || !capacity || !price || !booking_slots || !address || !location || !farFromMetro) { return res.status(404).json({ success: false, msg: "All fields are required" }) };
+                if (!name || !description || !capacity || !price || !booking_slots || !address || !city || !farFromMetro || !purpose) { return res.status(404).json({ success: false, msg: "All fields are required" }) };
+
+                
+                purpose = purpose.toLowerCase();
+                booking_slots = booking_slots.toLowerCase();
+                city = city.toLowerCase();
 
                 if (capacity < 0)
                     return res.status(404).json({ success: false, msg: "Capacity can't be negative " })
@@ -85,9 +91,9 @@ function PlacesControllers() {
 
 
                 const place = await PlacesModel.create({
-                    name, description, price, address, capacity, sponser_id: req.user._id,location, booking_slots, available, picture: {
+                    name, description, price, address, capacity, sponser_id: req.user._id,city, booking_slots, available, picture: {
                         public_id: myCloud.public_id, url: myCloud.secure_url
-                    },totalPrice,farFromMetro:FarFromMetroPlace,keywords
+                    },totalPrice,farFromMetro:FarFromMetroPlace,keywords,purpose
                 })
 
                 return res.status(200).json({ success: true, msg: 'Adding a new place successfully ', place });
@@ -106,7 +112,7 @@ function PlacesControllers() {
                 //--------------- Find the place according to the id
                 let place = await PlacesModel.findOne({ sponser_id: req.user._id, _id: req.params.id });
 
-                console.log('check place ', place);
+                // console.log('check place ', place);
 
                 if (!place || place.length == 0) return res.status(404).json({ success: false, msg: "Can't find the place, please check again" });
 
@@ -142,7 +148,7 @@ function PlacesControllers() {
                 if (!file) return res.status(401).json({ success: false, msg: "Can't upload file, please try again if needed" })
 
                 //if file exist then first we delete ole file then we update other one
-                console.log('check place ', place, place.picture.public_id)
+                // console.log('check place ', place, place.picture.public_id)
                 await cloudinary.v2.uploader.destroy(place.picture.public_id);
 
                 const fileUri = await getDataUri(file);
@@ -173,7 +179,8 @@ function PlacesControllers() {
                 // await cloudinary.v2.uploader.destroy(place.picture.public_id)
 
                 cloudinary.v2.uploader.destroy(place.picture.public_id, function(error,result) {
-                    console.log("check result and error ",result, error) }) 
+                    // console.log("check result and error ",result, error) 
+                }) 
 
                 
                 // console.log(place, place.picture.url, place.picture.public_id);

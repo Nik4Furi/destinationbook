@@ -1,5 +1,9 @@
 import React, { useEffect } from 'react'
+
 import {setUser} from '../Store/UsersSlice'
+import {fetchBooking} from '../Store/BookingSlice'
+import {setNotifications} from '../Store/NotificationSlice'
+
 import { useNavigate } from 'react-router-dom';
 import {useDispatch} from 'react-redux'
 
@@ -10,7 +14,12 @@ const Logout = () => {
     
     useEffect(()=>{
         localStorage.removeItem('token');
+
         dispatch(setUser(null));
+        dispatch(setNotifications(null));
+
+        dispatch(fetchBooking(null));
+
         navigate('/');
     })
 

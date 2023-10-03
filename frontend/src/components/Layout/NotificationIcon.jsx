@@ -1,29 +1,30 @@
 import React, { useEffect, useState } from 'react';
 
-import { Link } from 'react-router-dom'
-
-// Redux
-import { useDispatch, useSelector } from 'react-redux';
-import { readAll, removeNotification, setNotfications } from '../../Store/NotificationSlice';
+import { Link, useLocation } from 'react-router-dom'
 
 import { toast } from 'react-toastify'
+
+// Store Specific Stuff
+import { useDispatch, useSelector } from 'react-redux';
+import { removeNotification } from '../../Store/NotificationSlice';
+import { setBookingRequestReject, setBookingRequestSuccess } from '../../Store/BookingSlice';
+
 
 // Images 
 import bell from '../../assets/bell-2.png'
 import deleteImg from '../../assets/delete.png'
 
 //Components
-import Modal from '../Modal';
+import Modal from './Modal';
+import MainLoader from './Loaders/MainLoader';
 
 //Apis
 import sendNotification, { DeleteNotifications } from '../../apis/NotificationsApi';
-
-// Component
-import Loading from '../Loading';
-import { setBookingRequestReject, setBookingRequestSuccess } from '../../Store/BookingSlice';
-
+import { Token } from '../../GloballyFunctions';
 
 const NotificationIcon = () => {
+
+  const location = useLocation();
 
   //--------------- Store Specific STuff -----------------X
   const dispatch = useDispatch();
@@ -31,44 +32,46 @@ const NotificationIcon = () => {
 
   const users = useSelector(state => state.users.user);
 
-  const token = localStorage.getItem('token'); //Authentication token
-
   //--------------- Find out the notifications count to show the notifications 
   const [notifications, setNotifications] = useState([]);
-
+  const [loading, setLoading] = useState(false);
   const [count, setCount] = useState(0);
 
   //-------------------- Function to get all the notification of respective user
   const getAllNotifications = async () => {
-    try {
 
-      const res = await fetch(`${process.env.REACT_APP_API}notification/getAllNotifications`, {
-        headers: {
-          'Content-Type': 'application/json',
-          'auth-token': token
-        }
-      });
-      const data = await res.json();
-      console.log('fetching all the notifications ',data.notification);
-      setNotifications(data.notification);
+    if (Token !== null) {
+      try {
 
-      setCount(data.notification.length)
+        const res = await fetch(`${process.env.REACT_APP_API}notification/getAllNotifications`, {
+          headers: {
+            'Content-Type': 'application/json',
+            'auth-token': Token
+          }
+        });
+        const data = await res.json();
 
-      dispatch(setNotfications(data.notification));
+        setNotifications(data.notification);
 
-    } catch (error) {
-      console.log('error ', error);
+        setCount(data.notification.length)
+
+        dispatch(setNotifications(data.notification));
+
+      } catch (error) {
+        // console.log('error ', error);
+        toast.error(error);
+      }
     }
   }
 
   useEffect(() => {
-    getAllNotifications(); // fetching all the notifications
-  }, [])
+
+    if (Token !== null)
+      getAllNotifications(); // fetching all the notifications
+
+  },[])
 
 
-
-  // console.log('unread ', notifications);
-  const [loading, setLoading] = useState(false);
 
 
   //--------------- Modal Specific Stuff, actions related to modal --------------X
@@ -81,6 +84,7 @@ const NotificationIcon = () => {
       toast.warn('You have no msg receive yet');
       return;
     }
+
     setIsModalOpen(true);
 
     //---------- Updating the count
@@ -113,8 +117,9 @@ const NotificationIcon = () => {
   };
 
   //----------------- Function to handle the request of acceptence and rejectence ----------------X
-  const handleAcceptRequest = async (id,place_id) => {
-    console.log('accept ', id,place_id);
+  const handleAcceptRequest = async (id, place_id) => {
+
+    // console.log('accept ', id, place_id);
 
     // To accept the request of booking, change state first
     dispatch(setBookingRequestSuccess(place_id));
@@ -122,7 +127,7 @@ const NotificationIcon = () => {
     //-Find user details where we send the notification
     // console.log('all notifications ',notifications)
     const notify = notifications.filter(item => item._id === id);
-    console.log('check notify', notify);
+    // console.log('check notify', notify);
 
     const msg = {
       title: `Your request of the booking is accepted`,
@@ -135,18 +140,18 @@ const NotificationIcon = () => {
 
     //------------- Call the api to success the request of the user
     try {
-      const res = await fetch(`${process.env.REACT_APP_API}book/successRequest/${place_id}`,{
-        method : 'PUT',
-        headers : {
-          'auth-token' : token
+      const res = await fetch(`${process.env.REACT_APP_API}book/successRequest/${place_id}`, {
+        method: 'PUT',
+        headers: {
+          'auth-token': Token
         }
       })
       const data = await res.json();
-      console.log('success of the request ',data);
+      // console.log('success of the request ', data);
 
     } catch (error) {
-      console.log(error.message);
-      toast.error(error.message);
+      // console.log(error);
+      toast.error(error);
     }
 
     // ------ Send the notification to client 
@@ -160,8 +165,8 @@ const NotificationIcon = () => {
     toast.success('Sending the confirmation notification to client')
   }
 
-  const handleRejectRequest = async (id,place_id) => {
-    
+  const handleRejectRequest = async (id, place_id) => {
+
     // To accept the request of booking, change state first
     dispatch(setBookingRequestReject(place_id));
 
@@ -178,20 +183,20 @@ const NotificationIcon = () => {
 
     setLoading(true);
 
-     //------------- Call the api to reject the request of the user
-     try {
-      const res = await fetch(`${process.env.REACT_APP_API}book/cancelRequest/${place_id}`,{
-        method : 'PUT',
-        headers : {
-          'auth-token' : token
+    //------------- Call the api to reject the request of the user
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API}book/cancelRequest/${place_id}`, {
+        method: 'PUT',
+        headers: {
+          'auth-token': Token
         }
       })
       const data = await res.json();
-      console.log('Canceling the request of the user ',data);
+      // console.log('Canceling the request of the user ', data);
 
     } catch (error) {
-      console.log(error.message);
-      toast.error(error.message);
+      console.log(error);
+      toast.error(error);
     }
 
     // ------ Send the notification to client 
@@ -219,8 +224,8 @@ const NotificationIcon = () => {
 
     setLoading(true);
 
-    
-    if(notifications.length <= 1)
+
+    if (notifications.length <= 1)
       setIsModalOpen(false);
 
     //----------- Call the api to delete the notification
@@ -233,8 +238,8 @@ const NotificationIcon = () => {
         toast.error(data.msg);
 
     } catch (error) {
-      console.log('error ', error.message);
-      toast.error(error.message);
+      // console.log('error ', error);
+      toast.error(error);
     }
 
     setLoading(false);
@@ -242,17 +247,22 @@ const NotificationIcon = () => {
 
   // if(notifications.length <= 0)
   //   closeModal();
+  if(location.pathname === '/' && isModalOpen === true){
+    document.body.classList.add('noscroll'); 
+  }
+  else
+  document.body.classList.remove('noscroll'); 
 
   return (
-    <> 
+    <>
       {/* Modal section to open the modal when click on notification icon  */}
       <Modal isOpen={isModalOpen} onClose={closeModal}  >
-        {loading && <Loading />}
-        
+        {loading && <MainLoader />}
+
         {notifications &&
           notifications.map((item) => (
-            <div key={item._id} className="bg-white rounded-lg p-2 overflow-hidden my-4">
-            {/* <div key={item._id} className="bg-white rounded-lg overflow-hidden my-4" style={{width:"523px"}}> */}
+            <div key={item._id} className="bg-white text-black rounded-lg p-2 my-4">
+              {/* <div key={item._id} className="bg-white rounded-lg overflow-hidden my-4" style={{width:"523px"}}> */}
 
               <h2 className=" my-2 text-lg capitalize font-semibold">{item.title}</h2>
               <p className='text-sm'>{item.message}</p>
@@ -267,15 +277,15 @@ const NotificationIcon = () => {
               }{
                 users.role === 'sponser' &&
                 <div className="flex items-center justify-between">
-                  <button onClick={() => handleAcceptRequest(item._id,item?.place_id)} className='mx-2  my-1 px-2 bg-green-500 text-white py-1 rounded-md hover:bg-green-600 focus:outline-none focus:bg-green-600'>Accept</button>
-                  <button onClick={() => handleRejectRequest(item._id,item?.place_id)} className='mx-2 my-1  px-2 bg-red-500 text-white py-1 rounded-md hover:bg-red-600 focus:outline-none focus:bg-red-600'>Reject</button>
+                  <button onClick={() => handleAcceptRequest(item._id, item?.place_id)} className='mx-2  my-1 px-2 bg-green-500 text-white py-1 rounded-md hover:bg-green-600 focus:outline-none focus:bg-green-600'>Accept</button>
+                  <button onClick={() => handleRejectRequest(item._id, item?.place_id)} className='mx-2 my-1  px-2 bg-red-500 text-white py-1 rounded-md hover:bg-red-600 focus:outline-none focus:bg-red-600'>Reject</button>
                 </div>
               }
 
             </div>
           ))
         }
-{users.role !== 'user' && <h3 className="text-highlight">If you want to book any place, you need to create a new account <Link className='text-blue-400' to='/register' onClick={() => closeModal()}>Here</Link>  We will fix it later</h3> }
+        {/* {users.role !== 'user' && <h3 className="text-highlight">If you want to book any place, you need to create a new account <Link className='text-blue-400' to='/register' onClick={() => closeModal()}>Here</Link>  We will fix it later</h3>} */}
 
       </Modal>
 

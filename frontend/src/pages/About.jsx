@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import '../styles/about.module.css';
 
 import about from '../assets/about.jpg'
-import ServiceCard from '../components/Home/ServiceCard'
+import ServiceCard from '../components/pages/Home/ServiceCard'
 
 //-------- Images stuff
 import sponser1 from '../assets/Sponser/sponser-1.png'
@@ -26,7 +26,7 @@ const About = () => {
                 <div className='flex' style={{ "clipPath": "polygon(0 0, 100% 0%, 87% 100%, 0% 100%)" }}>
                     <div className="mx-2 my-3 p-2">
 
-                        <h2 className='text-2xl font-sans font-bold '><span className='text-red-400'>destinationbook</span>, Book Your Place</h2>
+                        <h2 className='text-2xl font-sans font-bold '><span className='text-red-400'>officelelo</span>, Book Your Space</h2>
                         <p className="mt-2">We are providing a service, help of this, users can book a place where they conduct a meet, vocation or other things, basically during booking, they provide some details about their booking, then our sponsers are processed for further steps. After that users can get the confirmation from sponser side for payment if request is processed successfully</p>
                     </div>
 
@@ -58,12 +58,12 @@ const About = () => {
             {/* Sponser Section to show case our sponser  */}
             <section id="Sponser" style={{minHeight:"20vh"}}>
                 <div className="container my-auto mx-auto" style={{overflow:'hidden'}}>
-                    <div className='flex items-center animate-slide my-10'>
-                        <img src={sponser1} alt="sponser" style={{opacity:"0.4",maxWidth:"100px",margin:"2px 28px"}} />
-                        <img src={sponser3} alt="sponser" style={{opacity:"0.4",maxWidth:"100px",margin:"2px 28px"}} />
-                        <img src={sponser2} alt="sponser" style={{opacity:"0.4",maxWidth:"100px",margin:"2px 28px"}} />
-                        <img src={sponser4} alt="sponser" style={{opacity:"0.4",maxWidth:"100px",margin:"2px 28px"}} />
-                        <img src={sponser5} alt="sponser" style={{opacity:"0.4",maxWidth:"100px",margin:"2px 28px"}} />
+                    <div className='flex items-center my-10'>
+                        <img src={sponser1} alt="sponser" className='animate-bounce' style={{opacity:"0.4",maxWidth:"100px",margin:"2px 28px"}} />
+                        <img src={sponser3} alt="sponser" className='animate-bounce' style={{opacity:"0.4",maxWidth:"100px",margin:"2px 28px"}} />
+                        <img src={sponser2} alt="sponser" className='animate-bounce' style={{opacity:"0.4",maxWidth:"100px",margin:"2px 28px"}} />
+                        <img src={sponser4} alt="sponser" className='animate-bounce' style={{opacity:"0.4",maxWidth:"100px",margin:"2px 28px"}} />
+                        <img src={sponser5} alt="sponser" className='animate-bounce' style={{opacity:"0.4",maxWidth:"100px",margin:"2px 28px"}} />
                     </div>
                 </div>
             </section>

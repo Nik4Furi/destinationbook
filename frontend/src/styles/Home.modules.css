@@ -13,8 +13,8 @@
 .text-overlay {
     position: absolute;
     top: 10%;
-    left: 8%;
-    /* left: 28%; */
+    /* left: 8%; */
+    left: 28%;
     /* transform: translate(-50%, -50%); */
     text-align: center;
     color: white;
@@ -108,3 +108,54 @@ top: 0;
     }
   }
   
+/* -------------------- Try to animating the whatsapp img to users are try to use it  */
+.whatsapp-img-animate{
+  animation: border-padding infinite 1s linear   ;
+  transition: all 0.7s animation;
+}
+
+@keyframes border-padding {
+  0%{
+      width: 10%;
+  }
+  25%{
+      width: 9%;
+  }
+
+  50%{
+    width:8%;
+  }
+  100%{
+    width: 7%;
+  }
+}
+
+/* ----------------------------- Here we show the image with transparent background  */
+#TransHeader{
+  width: 100%;
+  /* height: 500px; */
+  /* height: 100%; */
+
+  background-image: url('../assets/Home/bg.jpg');
+  /* background-image: url('../assets/Home/demo3.jpg'); */
+  /* background-image: url('../assets/bg-demo.jpeg'); */
+  background-size: cover;
+  /* background-size: auto; */
+  background-color: rgba(0, 0, 0, 0.367);
+  mix-blend-mode: multiply;
+  color: white;
+  background-blend-mode: darken;
+}
+
+/* ------------------------- When hover the card of the img, img scalling  */
+.card-img-hover img {
+  /* margin: 100px; */
+  transition: transform 0.25s ease;
+  cursor: zoom-in;
+}
+
+.card-img-hover:hover img {
+  transform: scale(1.02);
+  transition: transform 0.25s ease;
+  cursor: zoom-out;
+}

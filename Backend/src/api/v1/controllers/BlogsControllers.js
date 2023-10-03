@@ -12,7 +12,7 @@ function BlogsControllers() {
             try {
                 //-------- May be work as an searching also
                 let { title, written_by, select, sort } = req.query;
-                console.log(req.query);
+                // console.log(req.query);
 
                 const queryObject = {};
 

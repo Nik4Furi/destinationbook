@@ -1,6 +1,8 @@
 //----------------- Initalzing or requiring the modals here 
 const NotificationModel = require("../models/NotificationModel");
 
+const mongoose = require('mongoose')
+
 //------------- Creating the conrtollers to control notifications
 function NotificationControllers() {
     return {
@@ -9,7 +11,11 @@ function NotificationControllers() {
         async add(req, res) {
             try {
 
-                const { title, message,place_id } = req.body;
+                let { title, message,place_id,sender,receiver } = req.body;
+
+                sender = new mongoose.Types.ObjectId(sender);
+                receiver = new mongoose.Types.ObjectId(receiver);
+                place_id = new mongoose.Types.ObjectId(place_id);
 
                 if (!title || !message ) return res.status(409).json({ success: false, msg: 'All fields are required' })
 
@@ -17,19 +23,20 @@ function NotificationControllers() {
 
                 if(place_id){
                     notification = await NotificationModel.create({
-                        title, message, sender: req.user._id,receiver:req.params.id,place_id
+                        // title, message, sender: req.user._id,receiver:req.params.id,place_id
+                        title, message, sender,receiver,place_id
                     });
                 }else {
                     notification = await NotificationModel.create({
-                        title, message, sender: req.user._id,receiver:req.params.id
+                        title, message, sender,receiver
                     });
                 }
 
-                console.log('notification ',notification);
+                // console.log('notification ',notification);
 
                 return res.status(200).json({ success: true, msg: 'Adding a new notification successfully', notification });
 
-            } catch (error) { return res.status(500).json({ success: false, msg: error, message }); }
+            } catch (error) { return res.status(500).json({ success: false, msg: error }); }
         },
 
         //Getting all unread  notification , using GET '/api/v1/notification/getAllNotifications'
@@ -40,7 +47,7 @@ function NotificationControllers() {
 
                 return res.status(200).json({ success: true, msg: 'Fetch all the notifications successfully', notification });
 
-            } catch (error) { return res.status(500).json({ success: false, msg: error, message }); }
+            } catch (error) { return res.status(500).json({ success: false, msg: error }); }
         },
 
         //Delete a notification , using DELETE '/api/v1/notification/delete'
@@ -53,7 +60,7 @@ function NotificationControllers() {
 
                 return res.status(200).json({ success: true, msg: 'Delete the  notification successfully' });
 
-            } catch (error) { return res.status(500).json({ success: false, msg: error, message }); }
+            } catch (error) { return res.status(500).json({ success: false, msg: error }); }
         },
 
         //Reading all unread notifications , using GET '/api/v1/notification/read'
@@ -62,11 +69,11 @@ function NotificationControllers() {
 
                 const notification = await NotificationModel.updateMany({receiver: req.user.id, read: false }, { $set: { read: true } })
 
-                console.log('notification ',notification.matchedCount);
+                // console.log('notification ',notification.matchedCount);
 
                 return res.status(200).json({ success: true, msg: 'Reading the all unread notifications successfully' });
 
-            } catch (error) { return res.status(500).json({ success: false, msg: error, message }); }
+            } catch (error) { return res.status(500).json({ success: false, msg: error }); }
         },
     }
 }

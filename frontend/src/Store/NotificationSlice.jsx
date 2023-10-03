@@ -9,7 +9,7 @@ const NotificationSlice = createSlice({
     reducers: {
 
         //Set the data of user
-        setNotfications(state, action) {
+        setNotifications(state, action) {
             state.notifications = action.payload;
         },
 
@@ -25,5 +25,5 @@ const NotificationSlice = createSlice({
     }
 });
 
-export const { setNotfications,removeNotification,readAll } = NotificationSlice.actions;
+export const { setNotifications,removeNotification,readAll } = NotificationSlice.actions;
 export default NotificationSlice.reducer;

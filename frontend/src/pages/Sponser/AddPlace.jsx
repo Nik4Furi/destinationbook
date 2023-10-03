@@ -1,5 +1,5 @@
 import React from 'react'
-import AddPlaceForm from '../../components/Sponser/AddPlace'
+import AddPlaceForm from '../../components/pages/Sponser/AddPlace'
 
 const AddPlace = () => {
   return (

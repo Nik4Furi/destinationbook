@@ -1,24 +1,27 @@
 import React, { useEffect, useState } from 'react'
-import BookingForm from '../components/Booking/BookingForm'
 
-
-import dest from '../assets/dest-1.jpg'
 import { useNavigate, useParams } from 'react-router-dom'
+
 import { useSelector } from 'react-redux'
 
+//Components Stuff 
+import BookingForm from '../components/pages/BookNow/BookingForm'
+
+
 const BookNow = () => {
+    
     const navigate = useNavigate();
-    const { id } = useParams();
+    const { _id } = useParams();
 
     const places = useSelector(state => state.places.places);
-    console.log('all places ', places);
+    // console.log('all places ', places);
 
     const [chosePlace, setChosePlace] = useState();
 
 
     // -------------------------- When come this page checkout which place is chose by the users
     useEffect(() => {
-        const findPlace = places?.filter((item) => item._id === id);
+        const findPlace = places?.filter((item) => item._id === _id);
         if (findPlace?.length === 0 || !findPlace)
             navigate(-1);
         // console.log('find place ',findPlace);
@@ -26,7 +29,7 @@ const BookNow = () => {
         setChosePlace(findPlace);
 
     }, [])
-    console.log('check chose place ', chosePlace);
+    // console.log('check chose place ', chosePlace);
 
     return (
         <>
@@ -66,7 +69,7 @@ const BookNow = () => {
 
                         {/* Filling the form to book now  */}
                         <div>
-                            <BookingForm id={id} findPlace={chosePlace} />
+                            <BookingForm id={_id} findPlace={chosePlace} />
                         </div>
                     </div>
                 </div>

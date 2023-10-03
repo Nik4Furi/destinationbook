@@ -1,5 +1,5 @@
 import React from 'react'
-import Table from '../../components/Sponser/Table'
+import Table from '../../components/pages/Sponser/Table'
 
 const ShowPlaces = () => {
     return (

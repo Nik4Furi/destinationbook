@@ -1,5 +1,5 @@
 {
-  "name": "destinationbook_api",
+  "name": "officelelo_api",
   "version": "1.0.0",
   "description": "It's a backend stuff, where we write the backend code to help our app is working good, It's a destination book app, where clients can book a place where can conduct meet, functions or more ...",
   "main": "server",
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Nik4Furi/destinationbook.git"
+    "url": "git+https://github.com/Nik4Furi/officelelo.git"
   },
   "keywords": [
     "destinaion-book",
@@ -25,9 +25,9 @@
   "author": "Nikhil",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Nik4Furi/destinationbook/issues"
+    "url": "https://github.com/Nik4Furi/officelelo/issues"
   },
-  "homepage": "https://github.com/Nik4Furi/destinationbook#readme",
+  "homepage": "https://github.com/Nik4Furi/officelelo#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.40.0",

@@ -1,7 +1,7 @@
-# <h1 id="destinationbook"> destinationbook 📔 </h1>
+# <h1 id="officelelo"> officelelo 🚀 </h1>
 ### A place where you reserved your place
-**destinationbook**, is a platform where users can watching the places to book for the purpose of the meeting, stays, make fun, and enjoy life in their eyes.
-**destinationbook**,help to make place book or can reserved in seconds so that can best fit for the purpose make fullfillment. So Come and Enjoy Your Dream 🌠
+**officelelo**, is a platform where users can watching the places to book for the purpose of the meeting, stays, make fun, and enjoy life in their eyes.
+**officelelo**,help to make place book or can reserved in seconds so that can best fit for the purpose make fullfillment. So Come and Enjoy Your Dream 🌠
 
 ## Indexing the contents
 ####   <p><a href="#badges" >Badges</a></p>
@@ -14,13 +14,13 @@
 ## <h2 id="badges" >Badges </h2>
 
 
-![GitHub Repo stars](https://img.shields.io/github/stars/Nik4Furi/destinationbook?style=social) ![GitHub watchers](https://img.shields.io/github/watchers/Nik4Furi/destinationbook?style=social)
+![GitHub Repo stars](https://img.shields.io/github/stars/Nik4Furi/officelelo?style=social) ![GitHub watchers](https://img.shields.io/github/watchers/Nik4Furi/officelelo?style=social)
 
-![GitHub top language](https://img.shields.io/github/languages/top/Nik4Furi/destinationbook)   ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/Nik4Furi/destinationbook?style=flat-square) ![GitHub repo file count](https://img.shields.io/github/directory-file-count/Nik4Furi/destinationbook) 
-![GitHub commit activity](https://img.shields.io/github/commit-activity/m/Nik4Furi/destinationbook)   ![GitHub last commit](https://img.shields.io/github/last-commit/Nik4Furi/destinationbook)
+![GitHub top language](https://img.shields.io/github/languages/top/Nik4Furi/officelelo)   ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/Nik4Furi/officelelo?style=flat-square) ![GitHub repo file count](https://img.shields.io/github/directory-file-count/Nik4Furi/officelelo) 
+![GitHub commit activity](https://img.shields.io/github/commit-activity/m/Nik4Furi/officelelo)   ![GitHub last commit](https://img.shields.io/github/last-commit/Nik4Furi/officelelo)
 
 
-<a href="#destinationbook">Go Home </a>
+<a href="#officelelo">Go Home </a>
 
 
 ## <h2 id="stack" >Tech Stack </h2>
@@ -28,7 +28,7 @@
 
 **Server:** NodeJS, ExpressJS, MongoDB
 
-<a href="#destinationbook">Go Home </a>
+<a href="#officelelo">Go Home </a>
 
 
 
@@ -37,13 +37,13 @@
 Clone the project
 
 ```bash
-  git clone https://github/Nik4Furi/destinationbook
+  git clone https://github/Nik4Furi/officelelo
 ```
 
 Go to the project directory
 
 ```bash
-  cd destinationbook
+  cd officelelo
   cd Backend
 ```
 Install dependencies
@@ -60,14 +60,14 @@ Start the server
   yarn run dev (Run or restart, whenever you save any file(js))
 ```
 
-<a href="#destinationbook">Go Home </a>
+<a href="#officelelo">Go Home </a>
 
 ## <h2 id="envVar">Environment Variables </h2>
 
 To run this project, you will need to add the following environment variables to your .env file also can see  **.env.exmaple** file, and also helping the *config file* to run locally
 
 
-<a href="#destinationbook">Go Home </a>
+<a href="#officelelo">Go Home </a>
 
 
 ## <h2 id="routersRef">Routers Reference </h2>
@@ -81,4 +81,4 @@ To get the informantion about the routers can checkout *server.js* file
 - Sponsers can processed the request further
 
 
-<a href="#destinationbook">Go Home </a>
+<a href="#officelelo">Go Home </a>

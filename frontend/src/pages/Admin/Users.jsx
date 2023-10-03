@@ -1,7 +1,6 @@
-import React, { useEffect,useState } from 'react'
-import { useSelector } from 'react-redux'
+import React from 'react'
 
-import AdminUserTable from '../../components/Admin/AdminUserTable';
+import AdminUserTable from '../../components/pages/Admin/AdminUserTable';
 
 const Users = () => {
   
